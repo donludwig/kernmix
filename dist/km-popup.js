@@ -1,4 +1,4 @@
-/*! Kernmix 0.16.3 · kmPopup · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-popup.js, nicht von Hand ändern */
+/*! Kernmix 0.16.4 · kmPopup · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-popup.js, nicht von Hand ändern */
 /* Kernmix · Aufklappbares schließen (kmPopup): „Jedes Dropdown, Menü und Panel schließt mit Esc und mit Klick daneben, danach Fokus zurück auf den auslösenden Knopf.“
    Greift für jeden Knopf mit aria-expanded="true", der ein schwebendes Panel öffnet: aria-haspopup gesetzt, oder das Panel (aria-controls bzw. das nächste Geschwister) liegt absolut oder fest.
    Auf- und Zuklapp-Bereiche im Fluss (Seitenleisten-Gruppen, Karten, Bereiche) sind keine Panels und bleiben unberührt.

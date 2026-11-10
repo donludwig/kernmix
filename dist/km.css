@@ -1,4 +1,4 @@
-/*! Kernmix 0.16.3 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
+/*! Kernmix 0.16.4 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
     erzeugt mit tools/build.py aus src/ — nicht von Hand ändern. Reihenfolge: kern.min.css, km.css, Theme. */
 /* Kernmix · Core Token: eigene Farbreihen (Entscheidung 35)
    Gleiches Schema wie die KERN-Paletten (--kern-color-<reihe>-<stufe>, Stufen 025 bis 950, OKLCH): --km-color-<reihe>-<stufe>.

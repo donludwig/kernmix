@@ -1,4 +1,4 @@
-/*! Kernmix 0.16.3 · kmTabelle · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-table.js, nicht von Hand ändern */
+/*! Kernmix 0.16.4 · kmTabelle · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-table.js, nicht von Hand ändern */
 /* Kernmix · Tabellen-Bauweg (kmTabelle), Entscheidung „Eine Tabelle, ein Bauweg“ (docs/entscheidungen).
    Richtet jede km-table nach ihren Spaltenköpfen und der Liste „Rolle je Spalte“ in docs/seitenregeln.md aus:
    Spaltenrollen, Kopf-Icons, Datum mit relativer Angabe und Aktivitätsbalken, Umfang, Aktionsspalte zuletzt,

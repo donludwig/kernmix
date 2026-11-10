@@ -2,6 +2,13 @@
 
 Format: neueste Version oben, je Eintrag eine Zeile. Jede Version hat einen Release-Namen nach ihrem Kern („…“ in der Überschrift). Basis: KERN-Kit (@kern-ux/native) 2.8.2.
 
+## 0.16.4 „Überblick“ · 2026-11-10
+
+Der Prototyp beginnt mit dem Überblick.
+
+- Startansicht: Projektübersicht und Listen offen, Projektdetails zugeklappt.
+- Seitenleiste des Prototyps: „Kernmix auf GitHub“ führt wieder zum Repo, die Kachel „Eigenes Design-System“ und die Kernmix-Karte ebenso.
+
 ## 0.16.3 „Erster Eindruck“ · 2026-11-10
 
 - Prototyp: ruhigere Startansicht ohne Fokus-Box; Projektübersicht zugeklappt, Projektdetails und Listen offen, Über dieses Projekt weiter unten; Filter „nur offene“ an. README- und Social-Bilder ohne Versionsnummer.
