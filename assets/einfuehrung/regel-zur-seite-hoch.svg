@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 510" role="img" aria-labelledby="t d" font-family="inherit">
+<title id="t">Von der Regel zur Seite</title><desc id="d">Fünf Schritte: Entscheidung, Seitenregel, Baustein im Kit, Prüfung, Seite. Ein Lichtpunkt läuft durch die Schritte; jeder Schritt führt zur passenden Seite.</desc>
+<style>
+.f{fill:var(--km-color-card,#151d33);stroke:var(--km-color-border-section,#3d4a70);stroke-width:1.5;transition:stroke .2s,fill .2s}
+.i{fill:var(--km-color-inset,#1b253e);stroke:var(--km-color-border-card,#2c3756);stroke-width:1.5}
+.a{fill:var(--fb,var(--km-color-accent,#8fa6ff))}
+.kante{fill:var(--fb,var(--km-color-accent,#8fa6ff))}
+.l{stroke:var(--km-color-border-section,#3d4a70);stroke-width:2;fill:none}
+.flow{stroke:var(--fb,var(--km-color-accent,#8fa6ff));stroke-width:2.5;fill:none;stroke-dasharray:7 9}
+.h{fill:var(--km-color-text,#e8ecf8);font-size:22px;font-weight:700}
+.t{fill:var(--km-color-text,#e8ecf8);font-size:17px;font-weight:600}
+.m{fill:var(--km-color-text-muted,#b4bdd6);font-size:14px}
+.k{fill:var(--km-color-text-dim,#8c96b3);font-size:12px;letter-spacing:.08em;font-weight:600}
+.c{fill:var(--km-color-on-accent,#0c1120);font-size:15px;font-weight:700}
+.ic{fill:none;stroke:var(--fb,var(--km-color-accent,#8fa6ff));stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon{fill:none;stroke:var(--km-color-on-accent,#0c1120);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lk{cursor:pointer;outline:none}
+.lk:hover .f,.lk:focus-visible .f{stroke:var(--fb,var(--km-color-accent,#8fa6ff));fill:var(--km-color-inset,#1b253e)}
+.lk:focus-visible .f{stroke-width:3}
+.anim{animation-play-state:running}
+.flowan{animation:kmfxflow 1.1s linear infinite}
+.fader{animation:kmfxfader 5s ease-in-out infinite alternate;transform-box:fill-box}
+.puls{animation:kmfxpuls 3.2s ease-in-out infinite}
+.out{animation:kmfxout 4s ease-in-out infinite}
+.ebene{animation:kmfxein .7s ease-out both}
+.tropfen{animation:kmfxtropfen 2.8s linear infinite}
+.schritt{animation:kmfxschritt 10s ease-in-out infinite}
+.at{fill:var(--km-color-attention,#f59e0b)}
+.ca{fill:var(--km-color-on-attention,#0e1324);font-size:15px;font-weight:700}
+.ica{fill:none;stroke:var(--km-color-attention,#f59e0b);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.iconat{fill:none;stroke:var(--km-color-on-attention,#0e1324);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lu{fill:none;stroke:var(--km-color-attention,#f59e0b);stroke-width:2;stroke-dasharray:6 6}
+.luan{animation:kmfxflow 1.6s linear infinite}
+.mono{font-family:var(--km-font-mono,monospace)}
+.lk:hover .a,.lk:focus-visible .a,.lk:hover .at,.lk:focus-visible .at{stroke:var(--km-color-text,#e8ecf8);stroke-width:2}
+@keyframes kmfxflow{to{stroke-dashoffset:-32}}
+@keyframes kmfxfader{0%{transform:translateY(0)}100%{transform:translateY(var(--weg,40px))}}
+@keyframes kmfxpuls{0%,100%{opacity:1}50%{opacity:.82}}
+@keyframes kmfxout{0%,100%{stroke:var(--km-color-border-section,#3d4a70)}12%,30%{stroke:var(--fb,var(--km-color-accent,#8fa6ff))}}
+@keyframes kmfxein{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes kmfxtropfen{from{transform:translateY(0);opacity:0}10%{opacity:1}90%{opacity:1}to{transform:translateY(330px);opacity:0}}
+@keyframes kmfxschritt{0%,100%{stroke:var(--km-color-border-section,#3d4a70);stroke-width:1.5}8%,18%{stroke:var(--fb,var(--km-color-accent,#8fa6ff));stroke-width:3}}
+@media (prefers-reduced-motion: reduce){.flowan,.fader,.puls,.out,.ebene,.tropfen,.schritt,.luan{animation:none}}
+</style>
+<g style="--fb:var(--km-color-data-2)"><text class="k" x="0" y="16">VON DER REGEL ZUR SEITE</text><g><g style="--fb:var(--km-color-data-2)"><rect class="f schritt" style="animation-delay:0s" x="0" y="30" width="250" height="78"/><rect class="kante" x="0" y="30" width="250" height="4"/><g class="ic" transform="translate(14 46) scale(1.000)"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></g><text class="t" x="236" y="68" text-anchor="end" style="font-size:24px;font-weight:700;opacity:.55">1</text><text class="t" x="48" y="65">Entscheidung</text><text class="m" x="14" y="92" style="font-weight:400">ADR oder DDR, begründet</text></g></g><path class="flow flowan" style="animation-delay:0.0s" d="M125 110 V124"/><a href="../storybook/index.html#story=grundlagen-kernmix-einf-hrung" target="_top" class="lk"><title>Seitenregel: ansehen</title><g style="--fb:var(--km-color-data-2)"><rect class="f schritt" style="animation-delay:2s" x="0" y="126" width="250" height="78"/><rect class="kante" x="0" y="126" width="250" height="4"/><g class="ic" transform="translate(14 142) scale(1.000)"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></g><text class="t" x="236" y="164" text-anchor="end" style="font-size:24px;font-weight:700;opacity:.55">2</text><text class="t" x="48" y="161">Seitenregel</text><text class="m" x="14" y="188" style="font-weight:400">kurze Prüfliste</text></g></a><path class="flow flowan" style="animation-delay:0.2s" d="M125 206 V220"/><a href="../storybook/index.html#story=erweiterungen-werkzeug-bausteine-km-segmented-control" target="_top" class="lk"><title>Baustein: ansehen</title><g style="--fb:var(--km-color-data-2)"><rect class="f schritt" style="animation-delay:4s" x="0" y="222" width="250" height="78"/><rect class="kante" x="0" y="222" width="250" height="4"/><g class="ic" transform="translate(14 238) scale(1.000)"><path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"/><rect x="14" y="2" width="8" height="8" rx="1"/></g><text class="t" x="236" y="260" text-anchor="end" style="font-size:24px;font-weight:700;opacity:.55">3</text><text class="t" x="48" y="257">Baustein</text><text class="m" x="14" y="284" style="font-weight:400">im Kit, mit Doku und Story</text></g></a><path class="flow flowan" style="animation-delay:0.4s" d="M125 302 V316"/><a href="../storybook/index.html#story=grundlagen-tokens-farben-rollen-km" target="_top" class="lk"><title>Prüfung: ansehen</title><g style="--fb:var(--km-color-data-2)"><rect class="f schritt" style="animation-delay:6s" x="0" y="318" width="250" height="78"/><rect class="kante" x="0" y="318" width="250" height="4"/><g class="ic" transform="translate(14 334) scale(1.000)"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></g><text class="t" x="236" y="356" text-anchor="end" style="font-size:24px;font-weight:700;opacity:.55">4</text><text class="t" x="48" y="353">Prüfung</text><text class="m" x="14" y="380" style="font-weight:400">misst, statt zu behaupten</text></g></a><path class="flow flowan" style="animation-delay:0.6000000000000001s" d="M125 398 V412"/><a href="../storybook/index.html#tab=prototyp" target="_top" class="lk"><title>Seite: ansehen</title><g style="--fb:var(--km-color-data-2)"><rect class="a" style="animation-delay:8s" x="0" y="414" width="250" height="78"/><g class="icon" transform="translate(14 430) scale(1.000)"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></g><text class="c" x="236" y="452" text-anchor="end" style="font-size:24px;font-weight:700;opacity:.55">5</text><text class="c" x="48" y="449">Seite</text><text class="c" x="14" y="476" style="font-weight:400">Mensch oder Agent baut</text></g></a></g>
+</svg>

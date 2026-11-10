@@ -1,0 +1,206 @@
+/* Kernmix · Rollen-Tokens (--km-*), Ebene „Semantische Token“ (Entscheidungen 30 und 32): zeigen bevorzugt auf semantische KERN-Tokens;
+   wo KERN keinen passenden hat, auf eine eigene Erweiterung im KERN-Schema (--km-<typ>-<kontext>-…), die ihrerseits auf Core Token zeigt. Bausteine lesen nur --km-*.
+   Ein Theme (dist/themes/*.css, nach dieser Datei geladen) setzt die KERN-Werte; ohne Theme gilt das Original-KERN.
+
+   ── Eigene Tokens (lesen nur KERN) ──
+   Auch an jedem Element mit Theme-Attribut deklariert: var() wird dort aufgelöst, wo die Eigenschaft steht.
+   Nur auf :root würde ein Theme auf einem Teilbereich (data-kern-theme an einem Container) die --km-*-Werte nicht ändern. */
+:root, [data-kern-theme], .kern-dark, .kern-light {
+  /* Standardwerte für theme-eigene Tokens; jedes Theme darf sie überschreiben */
+  --km-color-text-dim: var(--kern-color-layout-text-muted);
+  --km-color-attention: var(--kern-color-feedback-warning);
+  --km-color-on-attention: var(--kern-color-layout-background-default);
+  --km-shadow: rgba(0, 0, 0, 0.15);
+  --km-icon-stroke: 2;
+  --km-icon-linecap: round;   /* Lucide-Standard */
+  --km-icon-linejoin: round;
+
+  /* Farben nach Rolle */
+  --km-color-page: var(--kern-color-layout-background-default);
+  --km-color-section: var(--kern-color-layout-background-level-1);
+  --km-color-card: var(--kern-color-layout-background-level-1-surface);
+  --km-color-inset: var(--kern-color-layout-background-level-2);
+  --km-color-track: var(--kern-color-layout-background-level-2-surface);
+  --km-color-border-section: var(--kern-color-layout-border);
+  --km-color-border-card: var(--kern-color-layout-border-level-1);
+  --km-color-text: var(--kern-color-layout-text-default);
+  --km-color-text-muted: var(--kern-color-layout-text-muted);
+  --km-color-accent: var(--kern-color-action-default);
+  --km-color-on-accent: var(--kern-color-action-on-default);
+  --km-color-focus: var(--kern-color-action-focus-default);
+  --km-color-highlight: var(--kern-color-feedback-info);              /* hervorgehobener Bereich (Fokus-Liste) */
+  --km-color-highlight-bg: var(--kern-color-feedback-info-background);
+  /* Rückmeldefarben (Entscheidung 32): Bausteine lesen diese statt --kern-color-feedback-* direkt */
+  --km-color-feedback-success: var(--kern-color-feedback-success);
+  --km-color-feedback-success-background: var(--kern-color-feedback-success-background);
+  --km-color-feedback-info: var(--kern-color-feedback-info);
+  --km-color-feedback-info-background: var(--kern-color-feedback-info-background);
+  --km-color-feedback-warning: var(--kern-color-feedback-warning);
+  --km-color-feedback-warning-background: var(--kern-color-feedback-warning-background);
+  --km-color-feedback-danger: var(--kern-color-feedback-danger);
+  --km-color-feedback-danger-background: var(--kern-color-feedback-danger-background);
+  /* Zustandstönungen (Entscheidung 33): gewählt über den KERN-Token, hier auf den Kit-Wert 0,16 gesetzt (KERN 0,12; KERN liest ihn selbst nicht, Bausteine von KERN ändern sich nicht);
+     Hover als Anteil „transparent“ wie --kern-color-action-state-opacity-hover, aber in beiden Modi 92 % (= 8 % Tönung); KERNs eigener Hover-Wert bleibt für KERN-Bausteine unberührt */
+  --kern-color-action-state-opacity-selected: .16;
+  --km-color-action-state-opacity-hover: 92%;
+  --km-color-action-state-opacity-selected: var(--kern-color-action-state-opacity-selected);
+
+  /* Abstände: semantische KERN-Abstände (--kern-metric-space-*); 12 und 20 px fehlen bei KERN und sind Erweiterungen im selben Schema */
+  --km-metric-space-small-plus: var(--kern-12);    /* Erweiterung zwischen small (8) und default (16) */
+  --km-metric-space-default-plus: var(--kern-20);  /* Erweiterung zwischen default (16) und large (24) */
+  --km-space-2xs: var(--kern-metric-space-x-small);
+  --km-space-xs: var(--kern-metric-space-small);
+  --km-space-s: var(--km-metric-space-small-plus);
+  --km-space-m: var(--kern-metric-space-default);
+  --km-space-l: var(--km-metric-space-default-plus);
+  --km-space-xl: var(--kern-metric-space-large);
+  --km-space-2xl: var(--kern-metric-space-x-large);
+
+  /* Abstands-Regelwerk (2026-11-08): von außen nach innen jede Ebene eine Stufe kleiner, innen nie größer als außen.
+     Doku: docs/index.html#abstaende, Komponentenbeschreibung Grundlagen › Abstände */
+  --km-space-page: var(--km-space-2xl);       /* Ebene 1: zwischen Bereichen der Seite */
+  --km-space-section-x: var(--km-space-xl);   /* Innenrand eines Bereichs, seitlich und unten */
+  --km-space-section-y: var(--km-space-l);    /* Kopf eines Bereichs, oben und unten */
+  --km-space-block: var(--km-space-m);        /* Ebene 2: zwischen Unterbereichen eines Bereichs (Karten, Tabelle, Suchfeld, Gruppen) */
+  --km-space-card: var(--km-space-m);         /* Innenrand einer Karte */
+  --km-space-group: var(--km-space-s);        /* Ebene 3: zwischen Gruppen in einer Karte (Text, Fakten, Panels, Aktionen) */
+  --km-space-heading: var(--km-space-2xl);    /* über einem Zwischentitel im Lauftext, wie über „Sechs Prinzipien“ in der Einführung */
+  --km-space-stack: var(--km-space-xs);       /* Ebene 4: zwischen zusammengehörigen Teilen (Titel und Untertitel, Zeilen einer Liste) */
+  --km-space-tight: var(--km-space-2xs);      /* Ebene 5: eng (Label und Wert, Icon und Text, Chips untereinander) */
+  --km-gap: var(--km-space-group);
+  /* Icon und Text (Entscheidung 41: „Abstand Icon + Text kleiner“): ein Wert für jedes Lucide-Icon vor oder hinter Text
+     (Knöpfe, Seitenleiste, Zwischentitel, Segmented Control, Chips, Panels, Etiketten). Erweiterung im KERN-Schema zwischen x-small (4) und small (8): KERN-Core 6 px, vorher meist 8 px.
+     Kachel oder Kürzel neben einem Titel eine Stufe enger als vorher: --km-space-stack (8 px) statt --km-space-group (12 px). */
+  --km-metric-space-x-small-plus: var(--kern-6);
+  --km-space-icon-text: var(--km-metric-space-x-small-plus);
+  --km-space-tile-title: var(--km-space-stack);
+
+
+  /* Schrift (KERN-Größen; Dashboard ist dichter als KERN-Standard, Mindestgröße 0.75rem) */
+  --km-font: var(--kern-typography-font-family-default);
+  --km-font-display: var(--km-font); /* Überschriften; ein Theme kann eine eigene Schrift setzen („Papier“: Archivo) */
+  --km-font-mono: var(--kern-typography-font-family-mono, var(--kern-typography-font-family-fira-mono, ui-monospace, monospace));
+  /* Schriftgrößen: KERN hat semantisch nur small-static (16), medium-static (18), large-static (21) und viewportabhängige Größen; 12, 14, 20 und 26 sind Erweiterungen im selben Schema */
+  --km-typography-font-size-2x-small-static: var(--kern-font-size-12);
+  --km-typography-font-size-x-small-static: var(--kern-font-size-14);
+  --km-typography-font-size-x-large-static: var(--kern-font-size-26);
+  --km-font-size-xs: var(--km-typography-font-size-2x-small-static);   /* Meta, Chips, Labels */
+  --km-font-size-s: var(--km-typography-font-size-x-small-static);     /* Listen, Karten-Text */
+  --km-font-size-m: var(--kern-typography-font-size-small-static);     /* Lead, Fließtext */
+  --km-font-size-l: var(--kern-typography-font-size-large-static);     /* Bereichstitel, große Werte: KERN-Stufe 21 px (bis 0.7.0 eigene Erweiterung 20 px, gestrichen 2026-11-09) */
+  --km-font-size-xl: var(--km-typography-font-size-x-large-static);    /* Kürzel, Titel klappbarer Karten */
+  /* Typografie nach Rolle (Entscheidung 40; Herleitung eine Analyse). Drei Textsorten:
+     Lesetext 16 px mit Maß (Doku, Entscheidungen, Komponenten-Seite), Arbeitstext 14 px (Tabellen, Karten, Seitenleiste), Beschriftung 12 px (nie Absätze).
+     Fluid nur für Lesetext, Einleitung und Display: wachsen ab 1024 px Breite leicht bis 1920 px (Lesetext 16 → 18 px); rem-Anteil, damit Zoom wirkt (WCAG 1.4.4). */
+  --km-typography-font-size-label: var(--km-font-size-xs);                      /* 12 px: Spaltenköpfe, Chips, Meta, Zähler */
+  --km-typography-font-size-body-small: var(--km-font-size-s);                  /* 14 px: Tabellen, Karten, Seitenleiste */
+  --km-typography-font-size-body: clamp(1rem, 0.857rem + 0.2232vw, 1.125rem);   /* 16 px bis 1024 px Breite, 18 px ab 1920 px */
+  --km-typography-font-size-lead: clamp(1.125rem, 0.982rem + 0.2232vw, 1.25rem); /* 18 → 20 px: Einleitung eines Bereichs */
+  --km-typography-font-size-heading-small: var(--kern-typography-font-size-medium-static);  /* 18 px: Zwischentitel im Lesetext */
+  --km-typography-font-size-heading-medium: var(--kern-typography-font-size-large-static);  /* 21 px: Bereichstitel */
+  --km-typography-font-size-heading-large: var(--km-typography-font-size-x-large-static);   /* 26 px: Seitentitel */
+  --km-typography-font-size-display: clamp(1.625rem, 1.2rem + 1.6vw, 2.5rem);   /* 26 → 40 px: nur Startseiten (Doku, Entscheidungen) */
+  --km-typography-font-size-display-large: clamp(2.5rem, 1.6rem + 3.2vw, 4.5rem); /* 40 → 72 px: Titel der Einführung (Startseite) */
+  --km-typography-font-size-subtitle: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);  /* 20 → 26 px: Untertitel unter dem Display-Titel */
+  --km-component-doc-width: 72rem;                                              /* größte Breite einer Doku-Seite (Einführung, Bausteine) */
+  --km-component-chapters-width: 15rem;                                         /* Breite der Kapitelleiste (km-chapters__nav) */
+  --km-component-corner-height: 1.75rem;                                        /* Höhe der Eckleiste unten links (km-corner) */
+  --km-component-corner-space: calc(var(--km-component-corner-height) + 2 * var(--km-space-xs)); /* so viel lässt eine Navigation unten frei: Eckleiste, Abstand zum Rand, Luft */
+  --km-component-figure-tall-max-width: 22rem;                                  /* größte Breite der Hochformat-Fassung einer Grafik (km-figure__tall) */
+  --km-component-sidebar-indent-label: calc(var(--km-icon-xs) + var(--km-space-icon-text)); /* Einzug unter einer Gruppe (DDR 47): Icon des Labels + Abstand, Einträge beginnen beim ersten Textzeichen */
+  --km-component-sidebar-indent-item: calc(var(--km-icon-s) + var(--km-space-icon-text));   /* Einzug einer Unterebene unter einem Eintrag: Icon des Eintrags + Abstand */
+  /* Zeilenhöhen, einheitenlos (WCAG 1.4.12) */
+  --km-typography-line-height-label: 1.333;      /* 12 → 16 */
+  --km-typography-line-height-body-small: 1.43;  /* 14 → 20 */
+  --km-typography-line-height-body: 1.625;       /* 16 → 26 */
+  --km-typography-line-height-lead: 1.556;       /* 18 → 28 */
+  --km-typography-line-height-heading: 1.25;     /* 18 bis 26 */
+  --km-typography-line-height-display: 1.15;
+  --km-typography-line-height-tight: 1;          /* Kürzel, Zähler in Steuerelementen */
+  /* Maß: Ziel 70 Zeichen je Zeile (Belege 66 bis 80). In em, nicht ch: 1ch ist in Atkinson Hyperlegible Next 1,43 mittlere Zeichen breit, in Inter 1,30
+     (gemessen 2026-11-09, deutscher Mustersatz, 16 px: mittleres Zeichen 0,452 em Atkinson, 0,487 em Inter). 32em ≈ 71 Zeichen Atkinson, 66 Inter. */
+  --km-metric-measure-narrow: 27em;   /* ≈ 60 Zeichen */
+  --km-metric-measure-default: 32em;  /* ≈ 70 Zeichen */
+  --km-metric-measure-column: 24em;                                             /* Mindestbreite einer Spalte in km-prose--columns (≈ 52 Zeichen; zwei Spalten nur, wenn beide so breit sind). 30em ergäbe zwei Spalten erst ab rund 1.100 px Kartenbreite, bei 1440 px Fenster nie */
+  --km-metric-measure-wide: 35.5em;   /* ≈ 78 Zeichen */
+  /* Abstände im Lesetext: über Zwischentiteln 4 : 1 */
+  --km-space-paragraph: 1em;                        /* Absatz zu Absatz, ≈ 16 px bei 16 px */
+  --km-space-prose-block: var(--km-space-xl);       /* 24 px zwischen einem Block (Hinweiskasten, Tabelle, Karten, Code, Checkliste) und dem Text davor und danach (Local AI Guide: „Blöcke kleben aneinander“) */
+  --km-space-heading-above: var(--km-space-heading); /* 32 px über einem Zwischentitel, wie --km-space-heading */
+  --km-space-heading-below: var(--km-space-xs);     /* 8 px darunter: der Titel gehört zum folgenden Text */
+  --km-space-list-item: var(--km-space-2xs);        /* 4 px zwischen Listenpunkten */
+  /* Laufweite: Versalien offener, große Größen leicht enger */
+  --km-typography-letter-spacing-caps: 0.06em;
+  --km-typography-letter-spacing-heading: -0.01em;
+  --km-typography-letter-spacing-display: -0.02em;
+  /* Gewichte */
+  --km-typography-font-weight-body: var(--kern-typography-font-weight-body-default);       /* 400 */
+  --km-typography-font-weight-heading: var(--kern-typography-font-weight-heading-default); /* 600 */
+  --km-font-weight-regular: var(--kern-typography-font-weight-regular);
+  --km-font-weight-medium: var(--kern-typography-font-weight-medium);
+  --km-font-weight-strong: var(--kern-typography-font-weight-semi-bold);
+
+  /* Form */
+  --km-radius: 0;
+  --km-opacity-disabled: var(--kern-color-action-state-opacity-disabled, 0.4);   /* abgeblendet, wie in KERN */
+  --km-border-width: var(--kern-metric-border-width-light);
+  --km-border-width-accent: var(--kern-3);   /* Akzentkante oben oder links an Karten */
+  --km-icon: var(--kern-16);  /* Strich, Enden und Ecken der Icons setzt das Theme (--km-icon-stroke, -linecap, -linejoin) */
+  --km-icon-tile: 2.25rem;
+  --km-color-border-input: var(--km-color-text-dim); /* Rand von Eingabefeldern und Kästchen, ≥ 3:1 (WCAG 1.4.11) */
+  --km-list-marker-size: var(--km-icon-xs);                                    /* Listenzeichen (DDR 46): Größe, Farbe, Einzug */
+  --km-list-indent: var(--km-space-m);
+  --km-mask-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E"); /* Lucide chevron-right als Maske */
+  --km-mask-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
+  --border-radius-large: 0;        /* KERN nutzt diesen (falsch benannten) Wert im Dialog unter 768 px; eckig wie überall */
+  /* Größen auf der KERN-Skala (2026-11-08): ersetzen alle px-Werte in den Bausteinen */
+  --km-space-3xs: var(--kern-metric-space-2x-small);                              /* Mini-Abstand: Chip-Innenrand, Fokusring-Spalt */
+  --km-border-width-strong: var(--kern-metric-border-width-default);   /* 2 px: Linien beim Ziehen, starke Rahmen */
+  --km-focus-offset: var(--kern-2);
+  --km-underline-offset: var(--kern-3);
+  --km-icon-2xs: var(--kern-10);
+  --km-icon-xs: var(--kern-12);     /* Icons in Labels, Chips, Knöpfen mit Text */
+  --km-icon-s: var(--kern-14);      /* Icons in Überschriften, Seitenleiste */
+  --km-icon-m: var(--kern-18);      /* Icons in Bereichs- und Kartenkacheln */
+  --km-icon-l: var(--kern-20);
+  --km-dot: var(--kern-8);          /* Farbpunkte, Marker */
+  --km-bar: var(--kern-3);          /* Balkenhöhe, Akzentlinie */
+  --km-bar-l: var(--kern-6);
+  --km-control-height: 1.6rem;      /* Knöpfe, Zähler, Chips im Kopf: gleiche Höhe */
+  /* Veraltete Namen (bis 0.5.0) für Komponentenmaße: zeigen auf die Komponenten-Tokens --km-component-* (Entscheidung 31, src/km-components.css); nur lesen, nicht setzen */
+  --km-font-size-monogram: var(--km-component-monogram-font-size);
+  --km-monogram-size: var(--km-component-monogram-size);
+  --km-sidebar-toggle-size: var(--km-component-sidebar-toggle-size);
+  --km-sidebar-rail-w: var(--km-component-sidebar-rail-width);
+  --km-sidebar-min-w: var(--km-component-sidebar-min-width);
+  --km-sidebar-w: var(--km-component-sidebar-width);
+  --km-header-control-height: var(--km-component-header-control-height);
+  --km-sort-w: var(--km-component-table-sort-width);
+  --km-sort-h: var(--km-component-table-sort-height);
+  --km-tracking-caps: var(--km-typography-letter-spacing-caps);  /* Versalien: Spaltenköpfe, Gruppenzeilen (alter Name) */
+  --km-tracking-mono: 0.012em;      /* Ziffern und Kennungen */
+  --km-shadow-strong: rgba(0, 0, 0, 0.35);
+  --km-shadow-overlay: var(--km-shadow-strong);  /* aufklappende Panels (Spaltenauswahl, Auswahl mit Suche); hell leichter, siehe unten */
+  /* Datenfarben (Entscheidung 35): Punkte, Ränder, Balken, nie Textfarbe. Semantisch nummeriert, jede Seite darf sie umbelegen; Werte sind Stufen der Farbreihen (KERN oder src/km-core.css) */
+  --km-color-data-1: var(--km-color-accent);
+  --km-color-data-2: var(--km-color-coral-400);
+  --km-color-data-3: var(--km-color-grass-250);
+  --km-color-data-4: var(--km-color-copper-450);
+  --km-color-data-5: var(--km-color-jade-500);
+  --km-color-on-data: var(--kern-color-white);   /* Text auf Datenfarben (Monogramme) */
+  /* Belegung der Datenfarben für die Werkzeuge in Project Dashboard und Lagebild (bis 0.5.0 feste Hex-Werte) */
+  --km-color-tool-code: var(--km-color-data-1);     /* Claude Code */
+  --km-color-tool-design: var(--km-color-data-2);   /* Claude Design */
+  --km-color-tool-desktop: var(--km-color-data-3);  /* Claude Desktop */
+  --km-color-tool-chat: var(--km-color-data-4);     /* Claude-Chats */
+  --km-color-tool-chatgpt: var(--km-color-data-5);  /* ChatGPT */
+  --km-drop-line: var(--km-border-width-strong); /* Einfügelinie beim Ziehen */
+  /* Aufklapp-Pfeil (zeigt nach rechts, gedreht = offen) für Masken */
+  --km-icon-extern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E");  /* Lucide arrow-up-right als Maske */
+  --km-caret-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3l5 5-5 5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* Hell: Datenfarben 2 und 3 eine Stufe dunkler, damit sie auf Weiß ≥ 3:1 erreichen (Prüfbericht 2026-11-08: #84cc16 = 1,98:1); Panels mit leichterem Schatten */
+:root[data-kern-theme=light], [data-kern-theme=light], .kern-light { --km-color-data-2: var(--km-color-coral-500); --km-color-data-3: var(--km-color-grass-550); --km-shadow-overlay: var(--km-shadow); }
+@media (prefers-color-scheme: light) { :root:not([data-kern-theme]) { --km-color-data-2: var(--km-color-coral-500); --km-color-data-3: var(--km-color-grass-550); --km-shadow-overlay: var(--km-shadow); } }
+

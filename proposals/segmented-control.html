@@ -1,0 +1,21 @@
+<!-- titel: Segmented Control | status: übernommen | datum: 2026-11-08 | bezug: KERN-Issue 1141 (gitlab.opencode.de/kern-ux/pattern-library/-/work_items/1141) -->
+<!-- Zweck: zwei bis fünf gleichrangige Ansichten umschalten (z. B. Karten / Zeitlich in der Projektschau). Semantik offen laut Issue: hier Button-Gruppe mit aria-pressed, wie in der Projektschau. -->
+<div style="display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem;font-family:var(--km-font);color:var(--km-color-text)">
+  <div class="km-segmented" role="group" aria-label="Ansicht">
+    <button type="button" class="km-segmented__btn" aria-pressed="true">Karten</button>
+    <button type="button" class="km-segmented__btn" aria-pressed="false">Zeitlich</button>
+  </div>
+  <div class="km-segmented" role="group" aria-label="Sprache">
+    <button type="button" class="km-segmented__btn" aria-pressed="false">Deutsch</button>
+    <button type="button" class="km-segmented__btn" aria-pressed="true">English</button>
+    <button type="button" class="km-segmented__btn" aria-pressed="false" disabled>Leichte Sprache</button>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.km-segmented').forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('.km-segmented__btn'); if (!b || b.disabled) return;
+      g.querySelectorAll('.km-segmented__btn').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+</script>

@@ -1,0 +1,1 @@
+Archivo (variabel: wdth, wght), Omnibus-Type, github.com/Omnibus-Type/Archivo, Commit 211127690e8f vom 2026-09-02, Datei fonts/variable/Archivo[wdth,wght].ttf. Lizenz SIL OFL 1.1. Herkunft und Lizenz geprüft am 2026-11-09.

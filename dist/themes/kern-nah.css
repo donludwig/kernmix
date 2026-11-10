@@ -1,0 +1,109 @@
+/*! Kernmix 0.16.3 · Theme kern-nah · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
+    erzeugt mit tools/build.py aus src/ — nicht von Hand ändern. Reihenfolge: kern.min.css, km.css, Theme. */
+/* Kernmix · Theme „Kobalt“ (Datei kern-nah.css, bis 2026-11-08 „KERN-nah“)
+   Setzt nur KERN-Tokens (--kern-*) und die theme-eigenen Werte des Kits (Meta-Text, Signalfarbe, Icon-Look).
+   Schrift Atkinson Hyperlegible Next (seit 0.8.0, vorher Inter). Laden NACH dist/km.css. Ohne Theme-Datei sehen die Bausteine aus wie das Original-KERN.
+   Modi wie KERN: data-kern-theme="dark|light" (oder .kern-dark/.kern-light), ohne Attribut folgt prefers-color-scheme. */
+
+/* ── Theme dunkel (Standard) ──
+   Richtung „KERN-nah“ aus Design-Runde 1: blau getöntes Neutral, Akzent aus der KERN-Dunkelblau-Familie.
+   Ebenen: default = Seite, level-1 = Bereich (Wanne), level-1-surface = Karte, level-2 = Fläche in der Karte, level-2-surface = Spuren. */
+:root,
+:root[data-kern-theme=dark], [data-kern-theme=dark], .kern-dark {
+  /* Schrift für Text und Überschriften (Entscheidung 38): Atkinson Hyperlegible Next, lokal über dist/fonts.css; Inter und Systemschrift als Ersatz */
+  --kern-typography-font-family-default: "Atkinson Hyperlegible Next", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --kern-typography-font-family-mono: "SF Mono", "Fira Code", ui-monospace, monospace;
+  --kern-metric-border-radius-small: 0;
+  --kern-metric-border-radius-default: 0;
+  --kern-metric-border-radius-large: 0;
+
+  --kern-color-layout-background-default: #0c1120;          
+  --kern-color-layout-background-level-1: #10172a;          
+  --kern-color-layout-background-level-1-surface: #151d33;  
+  --kern-color-layout-background-level-2: #1b253e;          
+  --kern-color-layout-background-level-2-surface: #25304d;  
+  --kern-color-layout-background-default-surface: #151d33;
+  --kern-color-layout-border: #3d4a70;                      
+  --kern-color-layout-border-level-1: #2c3756;              
+  --kern-color-layout-border-level-2: #2c3756;
+  --kern-color-layout-text-default: #e9ecf5;
+  --kern-color-layout-text-muted: #b8c0d5;  /* Lesetext gedämpft: ≥ 7:1 auf allen fünf Flächen (7,17 auf der Spur bis 10,33 auf der Seite); bis 0.11.0 #aab2c8, 6,16 auf der Spur */
+  --kern-color-action-default: #a5b4f0;
+  --kern-color-action-on-default: #0e1324;
+  --kern-color-action-focus-default: #a5b4f0;
+
+  --km-color-text-dim: #959eb6;     /* Meta, Beschriftungen; ≥ 4,5 auf level-2 */
+  --km-color-highlight: #657190;     /* Fokus-Bereich dezent, aber ≥ 3:1 gegen Seite, Bereich, Karte und eigene Fläche (3,13 bis 3,87) */
+  --km-color-highlight-bg: #1b253e;
+  /* Icons folgen dem Look des Themes: „KERN-nah“ ist eckig, also kantige Enden */
+  --km-icon-stroke: 2;
+  --km-icon-linecap: square;
+  --km-icon-linejoin: miter;
+  /* Rückmeldefarben als Text eine KERN-Stufe heller (350 statt 400), damit sie auch auf der Spur ≥ 4,5:1 erreichen (0.12.0; mit KERN-400 4,33) */
+  --kern-color-feedback-success: var(--kern-color-turquois-350);
+  --kern-color-feedback-warning: var(--kern-color-orange-350);
+  --kern-color-feedback-danger: var(--kern-color-red-350);
+  --kern-color-feedback-info: var(--kern-color-lightblue-350);
+  --km-color-attention: #f59e0b;    /* Freigabe und andere Wirkung nach außen */
+  --km-color-on-attention: #0e1324;
+  --km-shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* ── Theme hell ── Variante B „Papierweiß, kühl“: Logik des Dunkelmodus (Bereich heller als die Seite), Karten weiß, Ebenen über Linien, Akzent unverändert; alle Kontraste gerechnet ohne Verstoß, gedämpfter Text ≥ 7:1 */
+:root[data-kern-theme=light], [data-kern-theme=light], .kern-light {
+  --kern-color-layout-background-default: #eff2f9;
+  --kern-color-layout-background-level-1: #f4f7fc;
+  --kern-color-layout-background-level-1-surface: #ffffff;
+  --kern-color-layout-background-level-2: #f6f8fc;
+  --kern-color-layout-background-level-2-surface: #dfe3ed;
+  --kern-color-layout-background-default-surface: #ffffff;
+  --kern-color-layout-border: #b6becf;
+  --kern-color-layout-border-level-1: #cdd2df;
+  --kern-color-layout-border-level-2: #cdd2df;
+  --kern-color-layout-text-default: #172042;
+  --kern-color-layout-text-muted: #394570;
+  --kern-color-action-default: #3451c6;
+  --kern-color-action-on-default: #ffffff;
+  --kern-color-action-focus-default: #3451c6;
+
+  --km-color-text-dim: #55618b;
+  --km-color-highlight: #7985ab;
+  --km-color-highlight-bg: #f6f8fc;
+  --km-color-attention: #925600;
+  --kern-color-feedback-warning: #925600;
+  --kern-color-feedback-success: #007155;
+  --kern-color-feedback-danger: #c31c13;
+  --kern-color-feedback-info: #006b8c;
+  --km-color-on-attention: #ffffff;
+  --km-shadow: rgba(20, 30, 70, 0.10);
+}
+
+/* Ohne Attribut: helles Theme, wenn das System hell ist */
+@media (prefers-color-scheme: light) {
+  :root:not([data-kern-theme]) {
+    --kern-color-layout-background-default: #eff2f9;
+    --kern-color-layout-background-level-1: #f4f7fc;
+    --kern-color-layout-background-level-1-surface: #ffffff;
+    --kern-color-layout-background-level-2: #f6f8fc;
+    --kern-color-layout-background-level-2-surface: #dfe3ed;
+    --kern-color-layout-background-default-surface: #ffffff;
+    --kern-color-layout-border: #b6becf;
+    --kern-color-layout-border-level-1: #cdd2df;
+    --kern-color-layout-border-level-2: #cdd2df;
+    --kern-color-layout-text-default: #172042;
+    --kern-color-layout-text-muted: #394570;
+    --kern-color-action-default: #3451c6;
+    --kern-color-action-on-default: #ffffff;
+    --kern-color-action-focus-default: #3451c6;
+    --km-color-text-dim: #55618b;
+    --km-color-highlight: #7985ab;
+    --km-color-highlight-bg: #f6f8fc;
+    --km-color-attention: #925600;
+    --kern-color-feedback-warning: #925600;
+    --kern-color-feedback-success: #007155;
+    --kern-color-feedback-danger: #c31c13;
+    --kern-color-feedback-info: #006b8c;
+    --km-color-on-attention: #ffffff;
+    --km-shadow: rgba(20, 30, 70, 0.10);
+  }
+}

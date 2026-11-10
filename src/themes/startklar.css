@@ -1,0 +1,114 @@
+/* Kernmix · Theme „Papier“ (Datei startklar.css)
+   Farben aus dem Fragebogen Startklar (hell und dunkel).
+   Warme Papierflächen, Tinte, Indigo-Akzent, Signal Orange, Rückmeldefarben (Erfolg, Warnung, Fehler, Info) aus Startklar; Icons mit runden Enden wie in Startklar. Überschriften Archivo Extrabold, schmal (SIL OFL 1.1, lokal eingebunden über dist/fonts.css), Text Inter.
+   Setzt nur KERN-Tokens (--kern-*) und die theme-eigenen Werte des Kits. Laden NACH dist/km.css. Kontraste gerechnet (0.12.0): alle Textfarben ≥ 4,5:1 auf allen fünf Flächen einschließlich Spur, Lesetext gedämpft ≥ 7:1; hell bis 0.11.0 Lesetext #55503f (6,17 auf der Spur), Erfolg #1e7a45 (4,10), Signal #9a5a00 (4,19). */
+
+/* ── dunkel (Standard) ── Ebenen: Seite #161510, Bereich #1b1913, Karte #23201a, Fläche #2a2620, Spur #363223 */
+:root,
+:root[data-kern-theme=dark], [data-kern-theme=dark], .kern-dark {
+  --kern-typography-font-family-default: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --kern-typography-font-family-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --kern-metric-border-radius-small: 0;
+  --kern-metric-border-radius-default: 0;
+  --kern-metric-border-radius-large: 0;
+
+  --kern-color-layout-background-default: #161510;
+  --kern-color-layout-background-level-1: #1b1913;
+  --kern-color-layout-background-level-1-surface: #23201a;
+  --kern-color-layout-background-level-2: #2a2620;
+  --kern-color-layout-background-level-2-surface: #363223;
+  --kern-color-layout-background-default-surface: #23201a;
+  --kern-color-layout-border: #4c4839;
+  --kern-color-layout-border-level-1: #363223;
+  --kern-color-layout-border-level-2: #363223;
+  --kern-color-layout-text-default: #ebe6d8;
+  --kern-color-layout-text-muted: #c9c2ae;  /* ≥ 7:1 auf allen Flächen (7,21 auf der Spur); bis 0.11.0 #c3bca8, 6,77 */
+  --kern-color-action-default: #a9b2f5;
+  --kern-color-action-on-default: #1b1913;
+  --kern-color-action-focus-default: #a9b2f5;
+
+  --kern-color-feedback-success: #6fc191;
+  --kern-color-feedback-success-background: #1f3326;
+  --kern-color-feedback-warning: #e2b25a;
+  --kern-color-feedback-warning-background: #3a2d17;
+  --kern-color-feedback-danger: #ef8a7a;
+  --kern-color-feedback-danger-background: #3d221e;
+  --kern-color-feedback-info: #a9b2f5;
+  --kern-color-feedback-info-background: #2a2a45;
+  --km-color-text-dim: #a19a85;
+  --km-color-highlight: #777260;      /* Fokus-Bereich dezent, aber ≥ 3:1 gegen alle angrenzenden Flächen (3,12 bis 3,80) */
+  --km-color-highlight-bg: #2a2620;
+  --km-font-display: "Archivo Display", "Archivo", Georgia, "Times New Roman", serif; /* elegante Überschriften, Datei lokal in assets/fonts/ */
+  --km-icon-stroke: 2;
+  --km-icon-linecap: round;
+  --km-icon-linejoin: round;
+  --km-color-attention: #e2b25a;
+  --km-color-on-attention: #1b1913;
+  --km-shadow: rgba(0, 0, 0, 0.45);
+}
+
+/* ── hell ── Variante P2 „Warm neutral, eine Spur wärmer“: Helligkeitstreppe wie Kobalt-Variante D, leiser Gelbstich, Karten fast weiß; Tinte, Indigo und Signal unverändert; alle Kontraste gerechnet ohne Verstoß */
+:root[data-kern-theme=light], [data-kern-theme=light], .kern-light {
+  --kern-color-layout-background-default: #f1ede4;
+  --kern-color-layout-background-level-1: #f6f4ec;
+  --kern-color-layout-background-level-1-surface: #fffefa;
+  --kern-color-layout-background-level-2: #f9f6ef;
+  --kern-color-layout-background-level-2-surface: #e5dfd2;
+  --kern-color-layout-background-default-surface: #fffefa;
+  --kern-color-layout-border: #c5bdab;
+  --kern-color-layout-border-level-1: #dbd5c8;
+  --kern-color-layout-border-level-2: #dbd5c8;
+  --kern-color-layout-text-default: #171512;
+  --kern-color-layout-text-muted: #4b4637;
+  --kern-color-action-default: #3a2fd1;
+  --kern-color-action-on-default: #ffffff;
+  --kern-color-action-focus-default: #3a2fd1;
+  --kern-color-feedback-success: #1c7242;
+  --kern-color-feedback-success-background: #e3f1e8;
+  --kern-color-feedback-warning: #925600;
+  --kern-color-feedback-warning-background: #fbeedd;
+  --kern-color-feedback-danger: #b0352a;
+  --kern-color-feedback-danger-background: #f8e3e0;
+  --kern-color-feedback-info: #3a2fd1;
+  --kern-color-feedback-info-background: #ebe9fb;
+  --km-color-text-dim: #655e4b;
+  --km-color-highlight: #8e8772;
+  --km-color-highlight-bg: #f9f6ef;
+  --km-color-attention: #925600;
+  --km-color-on-attention: #ffffff;
+  --km-shadow: rgba(60, 45, 10, 0.10);
+}
+
+/* Ohne Attribut: helles Theme, wenn das System hell ist */
+@media (prefers-color-scheme: light) {
+  :root:not([data-kern-theme]) {
+    --kern-color-layout-background-default: #f1ede4;
+    --kern-color-layout-background-level-1: #f6f4ec;
+    --kern-color-layout-background-level-1-surface: #fffefa;
+    --kern-color-layout-background-level-2: #f9f6ef;
+    --kern-color-layout-background-level-2-surface: #e5dfd2;
+    --kern-color-layout-background-default-surface: #fffefa;
+    --kern-color-layout-border: #c5bdab;
+    --kern-color-layout-border-level-1: #dbd5c8;
+    --kern-color-layout-border-level-2: #dbd5c8;
+    --kern-color-layout-text-default: #171512;
+    --kern-color-layout-text-muted: #4b4637;
+    --kern-color-action-default: #3a2fd1;
+    --kern-color-action-on-default: #ffffff;
+    --kern-color-action-focus-default: #3a2fd1;
+    --kern-color-feedback-success: #1c7242;
+    --kern-color-feedback-success-background: #e3f1e8;
+    --kern-color-feedback-warning: #925600;
+    --kern-color-feedback-warning-background: #fbeedd;
+    --kern-color-feedback-danger: #b0352a;
+    --kern-color-feedback-danger-background: #f8e3e0;
+    --kern-color-feedback-info: #3a2fd1;
+    --kern-color-feedback-info-background: #ebe9fb;
+    --km-color-text-dim: #655e4b;
+    --km-color-highlight: #8e8772;
+    --km-color-highlight-bg: #f9f6ef;
+    --km-color-attention: #925600;
+    --km-color-on-attention: #ffffff;
+    --km-shadow: rgba(60, 45, 10, 0.10);
+  }
+}
