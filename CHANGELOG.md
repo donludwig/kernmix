@@ -2,6 +2,12 @@
 
 Format: neueste Version oben, je Eintrag eine Zeile. Jede Version hat einen Release-Namen nach ihrem Kern („…“ in der Überschrift). Basis: KERN-Kit (@kern-ux/native) 2.8.2.
 
+## 0.16.5 „Stimmig“ · 2026-11-10
+
+Versionsangaben im Prototyp stimmen.
+
+- Prototyp: Die Karte unter Design-Systeme nennt die aktuelle Kernmix-Version.
+
 ## 0.16.4 „Überblick“ · 2026-11-10
 
 Der Prototyp beginnt mit dem Überblick.
