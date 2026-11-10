@@ -1,4 +1,4 @@
-/*! Kernmix 0.16.5 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
+/*! Kernmix 0.16.11 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
     erzeugt mit tools/build.py aus src/ — nicht von Hand ändern. Reihenfolge: kern.min.css, km.css, Theme. */
 /* Kernmix · Core Token: eigene Farbreihen (Entscheidung 35)
    Gleiches Schema wie die KERN-Paletten (--kern-color-<reihe>-<stufe>, Stufen 025 bis 950, OKLCH): --km-color-<reihe>-<stufe>.
@@ -557,7 +557,7 @@ a.km-sidebar__item { text-decoration: none; }
 .km-table__group td { font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-strong); letter-spacing: var(--km-tracking-caps); text-transform: uppercase; background: var(--km-color-inset); box-shadow: inset var(--km-border-width-accent) 0 0 var(--km-row-color, var(--km-color-accent)); } /* Farbrand als innerer Schatten: kein schräger Eckstoß mit der Kopf-Linie (border-collapse) */
 .km-table tbody tr:hover td { background: var(--km-color-inset); }
 /* Zeile mit festem Aktions-Platz: jede Zeile hat dieselbe letzte Zelle, Knöpfe werden nur dort eingefügt */
-.km-table__actions { width: 1%; white-space: nowrap; text-align: left; }
+.km-table__actions { width: 1%; white-space: nowrap; text-align: right; } /* Funktionen rechtsbündig, auch wenn die Spalte breiter wird */
 .km-table :is(td, th).km-table__actions:last-child { position: sticky; right: 0; z-index: 1; background: var(--km-color-card); box-shadow: inset var(--km-border-width) 0 0 var(--km-color-border-card); } /* Aktionen liegen rechts fest über dem Inhalt, auch beim seitlichen Scrollen */
 .km-table tbody tr:hover > .km-table__actions:last-child { background: var(--km-color-inset); } /* Hover wie die übrige Zeile */  /* links: Knöpfe stehen in jeder Zeile auf derselben Linie */
 /* Außenabstand der Tabelle: erste und letzte Spalte mit demselben Abstand zum Rahmen wie der Inhalt eines Bereichs */
@@ -573,6 +573,7 @@ a.km-sidebar__item { text-decoration: none; }
 .km-table__name { display: inline-block; width: max-content; max-width: 22rem; overflow: hidden; text-overflow: ellipsis; vertical-align: top; font-weight: var(--km-font-weight-strong); line-height: 1.25rem; color: var(--km-color-text); text-decoration: none; white-space: nowrap; } /* Name ist ein Wert: bricht nie; lange Namen enden mit „…“, der volle Name steht im Tooltip; alle Zeilen bleiben gleich hoch; width: max-content, sonst rechnet Firefox die Spalte zu schmal und der Name läuft in die Werkzeug-Angabe; alle Namen gleich kräftig, „in Arbeit“ zeigt nur der Strich */
 .km-table__name > .km-monogram, .km-table__name > svg { vertical-align: top; margin-right: var(--km-space-icon-text); } /* Kürzel neben dem Namen eine Stufe enger (Entscheidung 41): 6 statt 8 px */
 .km-table__name > .km-monogram, .km-table__name > img { flex: none; }
+.km-table__name > svg { width: 1.25rem; height: 1.25rem; } /* Symbol vor dem Namen so hoch wie die Namenszeile, sonst steht es höher als der Text (0.16.11) */
 a.km-table__name:hover { text-decoration: underline; text-underline-offset: var(--km-underline-offset); }
 a.km-table__name:visited { color: var(--km-color-text); } /* Name bleibt weiß, auch wenn schon angeklickt; Seitenregeln wie a:visited färben ihn sonst im Akzent */
 /* Sortierbare Spalte: <th class="km-table__sort" aria-sort="ascending|descending|none"> */
@@ -1020,7 +1021,7 @@ html, body { font-variant-numeric: normal; }
 .km-focus table.km-table thead th { background: transparent; }
 .km-focus table.km-table tbody tr:nth-child(even) td { background: transparent; }
 details.km-section.km-focus > summary { background: transparent; }
-.km-focus > summary .km-section__icon { color: var(--km-color-highlight); background: var(--km-color-section); } /* Fokus liegt auf der Einsatz-Fläche: Kachel in der Bereichsfarbe, sonst verschwindet sie */
+.km-focus > summary .km-section__icon { background: var(--km-color-section); } /* Symbol in der Akzentfarbe wie bei allen Bereichen; Kachel bleibt in der Bereichsfarbe, weil die Einsatz-Fläche des Fokus sie sonst verschluckt */
 .km-focus__table tbody tr td:first-child { box-shadow: inset var(--km-border-width-accent) 0 0 var(--km-color-highlight); }
 .km-focus__hint {
     position: absolute;
@@ -1249,7 +1250,8 @@ details .km-details__body {
 .km-table__label { display: inline-flex; align-items: center; gap: var(--km-space-xs); } /* Etikett mit Text in einer Zelle (Score „A ab 90“): fester Abstand statt Leerzeichen */  /* Werte, Kennungen, Token: nie umbrechen */
 /* Laufende Nummer vor der ersten Zelle (aus dem Project Dashboard, 2026-11-08): Gruppenzeilen zählen nicht, ausgeblendete Zeilen auch nicht (display: none) – die Nummer folgt jedem Filter */
 .km-table--numbered { --km-table-num-lh: calc(var(--km-font-size-s) * 1.6); } /* Zahl so hoch wie die erste Textzeile der Zelle (Schrift s, Zeilenabstand 1,6 wie der Fließtext) */
-.km-table--numbered td:first-child:has(.km-monogram) { --km-table-num-lh: var(--km-component-monogram-size); } /* steht vorn ein Monogramm: mittig zum Monogramm wie im Dashboard */
+.km-table--numbered td:first-child:has(.km-monogram) { --km-table-num-lh: var(--km-component-monogram-size); }
+.km-table--numbered td:first-child:has(> .km-table__name):not(:has(.km-monogram)) { --km-table-num-lh: 1.25rem; } /* Name ohne Monogramm (Symbol oder nur Text): Zahl mittig zur Namenszeile */ /* steht vorn ein Monogramm: mittig zum Monogramm wie im Dashboard */
 .km-table--numbered tbody { counter-reset: km-row; }
 .km-table--numbered tbody td:first-child { white-space: nowrap; } /* Nummer und Name bleiben in einer Zeile, auch bei langem Namen */
 .km-table--numbered tbody tr:not(.km-table__group) { counter-increment: km-row; }
@@ -1665,6 +1667,10 @@ button.km-table__tool:hover, button.km-table__tool[aria-pressed="true"] { color:
 .km-sidebar__row { display: flex; align-items: center; gap: var(--km-space-icon-text); } /* Eintrag mit Schalter rechts (Bereich anzeigen/ausblenden) */
 .km-sidebar__row > .km-sidebar__item { flex: 1 1 auto; min-width: 0; }
 .km-sidebar__row > .km-switch { flex: none; padding: var(--km-space-2xs); }
+/* Funktion im Eintrag (0.16.9): Einträge mit Unterebene klappen per Klick nur auf und zu; Bearbeiten oder Verwalten sitzt als Symbol rechts in derselben Zeile */
+.km-sidebar__action { flex: none; margin-left: auto; display: inline-flex; align-items: center; justify-content: center; width: var(--km-component-sidebar-toggle-size); height: var(--km-component-sidebar-toggle-size); padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--km-color-text-dim); cursor: pointer; }
+.km-sidebar__action > .km-icon { width: var(--km-icon-s); height: var(--km-icon-s); }
+.km-sidebar__action:hover { color: var(--km-color-text); background: var(--km-color-inset); }
 .km-table__tool > .km-icon { flex: none; width: var(--km-icon-xs); height: var(--km-icon-xs); } /* Typ mit Symbol statt Punkt (z. B. WordPress, Nextcloud) */
 .km-table__tool:has(> .km-icon)::before { display: none; }
 
@@ -1680,7 +1686,8 @@ button.km-table__tool:hover, button.km-table__tool[aria-pressed="true"] { color:
 .km-table__key { font-family: var(--km-font-mono); font-weight: var(--km-font-weight-regular); white-space: nowrap; } /* Kennung: Mono, normal (0.11.0, vorher kräftig); Namen tragen km-table__name */
 .km-table code { font-family: var(--km-font-mono); font-size: 0.875em; font-weight: var(--km-font-weight-regular); color: var(--km-color-text); } /* Code in Zellen immer als Code erkennbar */
 .km-table td.km-table__key code { font-size: 1em; } /* Kennungs-Zelle ist schon Mono: Code darin gleich groß wie der Rest der Zelle */
-.km-table td.km-table__key, .km-table td.km-table__nowrap, .km-table td.km-table__num { width: 1%; } /* Kennungen und Werte so schmal wie ihr Inhalt, Fließtext-Spalten bekommen den Rest */
+.km-table td.km-table__key, .km-table td.km-table__nowrap, .km-table td.km-table__num { width: 1%; }
+.km-table td.km-table__nowrap:has(> .km-table__name), .km-table td:has(> a.km-table__name) { width: auto; } /* die Namensspalte nimmt den freien Platz, sonst teilt der Browser ihn auf alle 1-%-Spalten und die Aktionsspalte wird breiter als ihre Knöpfe */ /* Kennungen und Werte so schmal wie ihr Inhalt, Fließtext-Spalten bekommen den Rest */
 .km-table__nowrap, .km-table__nowrap * { white-space: nowrap; }
 .km-table__text--wide { min-width: 26rem; width: 30rem; }
 .km-tables { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: var(--km-space-block); align-items: start; } /* Raster kleiner Tabellen (z. B. Kennzahlen je Gruppe); ersetzt km-stats (2026-11-08) */
@@ -1708,7 +1715,7 @@ button.km-table__tool:hover, button.km-table__tool[aria-pressed="true"] { color:
 .km-sidebar__branch-toggle:hover { color: var(--km-color-text); }
 /* Eingeklappt: nur die Icons der obersten Einträge; Name bleibt für Screenreader und als title */
 .km-sidebar--rail { align-items: flex-start; gap: var(--km-space-s); }
-.km-sidebar--rail .km-sidebar__label, .km-sidebar--rail .km-sidebar__nest, .km-sidebar--rail .km-sidebar__branch-toggle, .km-sidebar--rail .km-sidebar__row > .km-switch, .km-sidebar--rail .km-sidebar__count { display: none; }
+.km-sidebar--rail .km-sidebar__label, .km-sidebar--rail .km-sidebar__nest, .km-sidebar--rail .km-sidebar__branch-toggle, .km-sidebar--rail .km-sidebar__row > .km-switch, .km-sidebar--rail .km-sidebar__action, .km-sidebar--rail .km-sidebar__count { display: none; }
 .km-sidebar--rail .km-sidebar__item { justify-content: center; gap: 0; width: auto; margin-right: 0; padding: var(--km-space-2xs) var(--km-space-xs); font-size: 0; }
 .km-sidebar--rail .km-sidebar__row:has(> .km-sidebar__branch-toggle) > .km-sidebar__item { padding-right: var(--km-space-xs); } /* Einträge mit Unterebene gleich breit wie die übrigen */
 .km-sidebar--rail .km-sidebar__icon { width: var(--km-icon-l); height: var(--km-icon-l); }

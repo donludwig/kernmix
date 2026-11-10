@@ -53,7 +53,8 @@
   /* Sprungnavigation: Klick auf einen Anker-Eintrag der Seitenleiste markiert ihn sofort (aria-current), nicht erst, wenn ein Beobachter nachzieht.
      Gescrollt wird ohne Animation (km.css setzt html { scroll-behavior: auto }). */
   document.addEventListener('click', function(e){
-    var a = e.target.closest && e.target.closest('a.km-sidebar__item[href^="#"], button.km-sidebar__item[data-target]'); if (!a || (a.tagName === 'A' && a.getAttribute('href').length < 2)) return;
+    var a = e.target.closest && e.target.closest('a.km-sidebar__item[href^="#"], button.km-sidebar__item[data-target], .km-sidebar__action[data-target]'); if (!a || (a.tagName === 'A' && a.getAttribute('href').length < 2)) return;
+    if (a.classList.contains('km-sidebar__action')) { var zeile = a.closest('.km-sidebar__row'); a = zeile && zeile.querySelector('.km-sidebar__item'); if (!a) return; } /* Funktion im Eintrag (0.16.10): markiert den Eintrag ihrer Zeile, sonst nichts */
     var nav = a.closest('nav, .km-sidebar') || document;
     [].forEach.call(nav.querySelectorAll('.km-sidebar__item[aria-current]'), function(x){ if (x !== a) x.removeAttribute('aria-current'); });
     a.setAttribute('aria-current', 'location');

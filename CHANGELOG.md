@@ -2,6 +2,34 @@
 
 Format: neueste Version oben, je Eintrag eine Zeile. Jede Version hat einen Release-Namen nach ihrem Kern („…“ in der Überschrift). Basis: KERN-Kit (@kern-ux/native) 2.8.2.
 
+## 0.16.11 „Eine Linie“ · 2026-11-10
+
+Nummer, Symbol und Name stehen auf einer Linie.
+
+- Tabellen: Ein Symbol im `km-table__name` ist so hoch wie die Namenszeile; die laufende Nummer (`km-table--numbered`) richtet sich bei Namen ohne Monogramm nach der Namenszeile.
+
+## 0.16.10 „Markiert“ · 2026-11-10
+
+- Seitenleiste: Ein Klick auf `km-sidebar__action` markiert den Eintrag derselben Zeile als aktuell und hebt die übrigen Markierungen auf.
+
+## 0.16.9 „Zahnrad“ · 2026-11-10
+
+Klappen und Funktion in der Seitenleiste getrennt.
+
+- Seitenleiste: neuer Baustein `km-sidebar__action`, ein Symbol rechts im Eintrag für Bearbeiten oder Verwalten. Einträge mit Unterebene klappen per Klick nur auf und zu.
+
+## 0.16.8 „Schmal“ · 2026-11-10
+
+- Tabellen: Die Namensspalte nimmt den freien Platz; die Aktionsspalte ist nur so breit wie ihre Knöpfe.
+
+## 0.16.7 „Rechts“ · 2026-11-10
+
+- Tabellen: Knöpfe der Aktionsspalte stehen rechtsbündig; `km-table__actions--start` bleibt linksbündig.
+
+## 0.16.6 „Gleiche Kachel“ · 2026-11-10
+
+- Fokus (`km-focus`): Symbol im Bereichskopf in der Akzentfarbe wie bei allen Bereichen; die Kachel bleibt in der Bereichsfarbe.
+
 ## 0.16.5 „Stimmig“ · 2026-11-10
 
 Versionsangaben im Prototyp stimmen.
