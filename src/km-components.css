@@ -7,6 +7,7 @@ html { scroll-behavior: auto; }  /* Sprünge sofort: KERN setzt smooth, über la
    Standardwerte zeigen auf Rollen (--km-*), semantische KERN-Tokens oder feste Bausteinmaße; ein Theme darf sie überschreiben.
    Auch an jedem Element mit Theme-Attribut deklariert, damit Werte mit var() dort aufgelöst werden (wie in km-roles.css). */
 :root, [data-kern-theme], .kern-dark, .kern-light {
+  --km-component-graph-frage: var(--km-color-feedback-success); /* Grafik km-graph: gestrichelte Linie „fragt vorher“, eigene Farbe neben Akzent (ruft auf) und Signalfarbe (wird aufgerufen) */
   --km-component-sidebar-width: 17.5rem;           /* feste Breite der ausgeklappten Seitenleiste in allen Seiten: kein Springen beim Laden, keine Messung */
   --km-component-sidebar-min-width: 14.375rem;     /* Mindestbreite der ausgeklappten Seitenleiste */
   --km-component-sidebar-width-wide: 20rem;        /* breitere Seitenleiste für Seiten mit langen Kapitelnamen (km-shell--nav-wide, Local AI Guide) */
@@ -14,6 +15,7 @@ html { scroll-behavior: auto; }  /* Sprünge sofort: KERN setzt smooth, über la
   --km-component-sidebar-toggle-size: 1.9rem;      /* Einklapp-Knopf der Seitenleiste; erster Eintrag hält diesen Abstand */
   --km-component-header-control-height: 1.75rem;   /* Knöpfe in der Kopfzeile der Seite */
   --km-component-monogram-size: var(--kern-20);    /* Kantenlänge des Monogramms (1.25rem); auch Bezug für die Zeilennummer davor */
+  --km-component-table-icon-size: var(--kern-16);  /* Symbol vor dem Namen in Tabellen (Typ, Art), überall gleich; steht in einer Zeile von --km-component-monogram-size Höhe mittig (0.19.3: „kleiner und einheitlich überall“) */
   --km-component-monogram-font-size: 0.6rem;       /* nur Monogramm-Kürzel im 20-px-Symbol (dekorativ, alt="") */
   --km-component-table-sort-width: 0.625rem;       /* Sortierpfeil: flaches Dreieck, Breite : Höhe = 2 : 1 */
   --km-component-table-sort-height: 0.3125rem;
@@ -94,9 +96,11 @@ a.km-sidebar__item { text-decoration: none; }
 .km-card__meta { font-size: var(--km-font-size-xs); color: var(--km-color-text-dim); }
 .km-card__text { margin: 0; font-size: var(--km-font-size-s); line-height: 1.55; color: var(--km-color-text-muted); text-wrap: pretty; hyphens: auto; }
 .km-card__foot { display: flex; flex-wrap: wrap; gap: var(--km-space-xs); padding-top: var(--km-space-xs); border-top: var(--km-border-width) solid var(--km-color-border-card); font-size: var(--km-font-size-xs); color: var(--km-color-text-dim); }
+.km-card > .km-card__foot { margin-top: auto; align-items: baseline; } /* Fuß samt Trennlinie unten in der Karte, in einer Reihe gleich hoher Karten auf einer Linie; Etikett und Text daneben auf einer Grundlinie */
 .km-card__foot--stack { flex-direction: column; align-items: flex-start; gap: var(--km-space-2xs); padding-top: var(--km-space-s); font-size: inherit; color: inherit; } /* Fuß mit Überschrift und Zeilen untereinander, z. B. „Meine Projekte“ */
 .km-card__foot--stack > .km-card__meta { margin-bottom: var(--km-space-2xs); }
 .km-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr)); gap: var(--km-space-block); }
+.km-cards > .km-card:has(> .km-card__head + .km-card__text + .km-card__foot:last-child) { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: var(--km-space-group); align-content: start; } .km-cards > .km-card:has(> .km-card__head + .km-card__text + .km-card__foot:last-child) > .km-card__foot { margin-top: 0; } /* Kopf, Text, Fuß: Reihen über alle Karten einer Zeile geteilt, Trennlinie des Fußes überall auf gleicher Höhe, auch wenn ein Fuß umbricht */
 /* Karte mit Kopfzeile, Untertitel und Schlagworten; klappbar über km-card--collapsible + km-card--collapsed */
 .km-card__body { display: flex; flex-direction: column; gap: var(--km-space-group); min-width: 0; }
 .km-card__subtitle { margin: var(--km-space-2xs) 0 0; font-size: var(--km-font-size-s); line-height: 1.45; color: var(--km-color-text-muted); overflow-wrap: anywhere; }  /* kurz: eine Zeile, der volle Text steht im Kartenkörper */
@@ -119,6 +123,12 @@ a.km-sidebar__item { text-decoration: none; }
 .km-panel li { --km-list-marker-offset: var(--km-space-2xs); } /* Listenzeichen: zentrale Rolle unten („Listenzeichen“), hier nur der Innenabstand oben */
 .km-panel ol { counter-reset: km-panel-ol; }
 .km-panel ol > li { counter-increment: km-panel-ol; }
+/* Scanbar (0.19.3: „typografisch lesbarer, besser scanbar, was als Nächstes passiert“): Punkte durch Linien getrennt, Leitwort (<strong> am Anfang) in Textfarbe;
+   Variante km-panel--schritte: nummeriert, der erste Schritt in Textfarbe mit Etikett km-panel__naechstes („Als Nächstes“) */
+.km-panel li + li { border-top: var(--km-border-width) solid var(--km-color-border-card); }
+.km-panel li > strong:first-child { color: var(--km-color-text); font-weight: var(--km-font-weight-strong); }
+.km-panel--schritte ol > li:first-child { color: var(--km-color-text); }
+.km-panel__naechstes { display: inline; margin-right: var(--km-space-xs); font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-strong); letter-spacing: var(--km-tracking-caps); text-transform: uppercase; color: var(--km-color-accent); }
 .km-panel ol > li::before { content: counter(km-panel-ol); position: absolute; left: 0; top: var(--km-space-2xs); width: auto; height: auto; background: none; -webkit-mask: none; mask: none; color: var(--km-card-accent, var(--km-color-text-dim)); font-weight: var(--km-font-weight-strong); font-variant-numeric: tabular-nums; } /* nummerierte Liste: Zahl statt Chevron */
 
 /* ── Werkzeugzeile: Suche, Knöpfe und Auswahl nebeneinander, alle gleich hoch ── */
@@ -235,15 +245,14 @@ a.km-sidebar__item { text-decoration: none; }
 .km-demo[aria-checked="true"] { opacity: 1; color: var(--km-color-text-muted); }
 .km-demo--fixed { position: fixed; left: var(--km-space-s); bottom: var(--km-space-xs); z-index: 60; }
 /* Eckleiste unten links: dezente Werkzeug-Einträge wie Demo-Schalter und Link zur Komponentenbeschreibung, fest in der Fensterecke */
-.km-corner { position: fixed; left: var(--km-space-s); bottom: var(--km-space-xs); z-index: 60; display: flex; align-items: center; gap: var(--km-space-2xs); padding: 0 var(--km-space-2xs); background: var(--km-color-page); }
+.km-corner { position: fixed; left: var(--km-space-s); bottom: var(--km-space-xs); z-index: 60; display: flex; align-items: center; gap: 0; padding: 0 var(--km-space-2xs); background: var(--km-color-page); }
 .km-corner .km-demo--fixed { position: static; }
 /* Eckleiste neben einer Seitenleiste (0.13.0: „liegt unten über der Navigation“): gleich hoch über --km-component-corner-height,
    die Seite lässt unter ihrer Navigation --km-component-corner-space frei (Scrollbereich endet über der Eckleiste). Eingeklappt (Rail) stehen
    die Einträge untereinander und nur als Icon, Name im title, damit die Leiste nicht in den Inhalt ragt. */
 .km-corner { min-height: var(--km-component-corner-height); }
-.km-sidebar--rail ~ .km-corner { flex-direction: column; align-items: flex-start; gap: 0; padding: 0; }
-.km-sidebar--rail ~ .km-corner :is(.km-demo, .km-corner__link) { font-size: 0; gap: 0; }
-.km-corner__link { display: inline-flex; align-items: center; gap: var(--km-space-icon-text); padding: var(--km-space-2xs) var(--km-space-xs); font-size: var(--km-font-size-xs); letter-spacing: var(--km-tracking-caps); color: var(--km-color-text-dim); text-decoration: none; }
+.km-sidebar--rail ~ .km-corner { display: none; } /* eingeklappt keine Eckleiste; vorher gestapelt als Icons (0.18.3) */
+.km-corner__link { display: inline-flex; align-items: center; gap: var(--km-space-icon-text); padding: var(--km-space-2xs) var(--km-space-2xs); /* Einträge enger */ font-size: var(--km-font-size-xs); letter-spacing: var(--km-tracking-caps); color: var(--km-color-text-dim); text-decoration: none; }
 .km-corner__link:hover, .km-corner__link:focus-visible { opacity: 1; color: var(--km-color-text-muted); text-decoration: underline; text-underline-offset: var(--km-underline-offset);  }
 
 .km-corner__link svg { width: var(--km-icon-xs); height: var(--km-icon-xs); }
@@ -253,6 +262,9 @@ a.km-sidebar__item { text-decoration: none; }
 .km-table { width: 100%; border-collapse: collapse; font-size: var(--km-font-size-s); color: var(--km-color-text); }
 .km-table th { padding: var(--km-space-xs) var(--km-space-m); text-align: left; font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-medium); letter-spacing: var(--km-tracking-caps); text-transform: uppercase; color: var(--km-color-text-dim); border-bottom: var(--km-border-width) solid var(--km-color-border-card); }
 .km-table td { padding: var(--km-space-s) var(--km-space-m); border-bottom: var(--km-border-width) solid var(--km-color-border-card); vertical-align: top; }  /* alle Zellen beginnen oben */
+.km-table tbody td:not(:has(.km-table__name, .km-table__typ, .km-iconbtn, .km-monogram, input, button)) { vertical-align: baseline; } /* Werte einer Zeile auf einer Grundlinie, auch bei kleinerer Schrift (Datum, Zahl, Umfang in Mono); die größte Schrift steht weiter oben */
+.km-table tbody tr:has(> td .km-iconbtn, > td .km-pill) > td:has(> .km-table__name) { --km-name-oben: calc(var(--km-space-s) + (var(--km-control-height) - 1.25rem) / 2); padding-top: var(--km-name-oben); } /* Name (Zeile 1.25rem) mittig zu Knöpfen und Pills (1.6rem) derselben Zeile, sonst sitzt er 3 px zu hoch */
+.km-table td:not(:has(.km-monogram)) > .km-table__name { line-height: inherit; } /* ohne Monogramm hat der Name die Zeilenhöhe der Zeile, dann steht er auf derselben Grundlinie wie die Werte daneben */
 .km-table__group td { font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-strong); letter-spacing: var(--km-tracking-caps); text-transform: uppercase; background: var(--km-color-inset); box-shadow: inset var(--km-border-width-accent) 0 0 var(--km-row-color, var(--km-color-accent)); } /* Farbrand als innerer Schatten: kein schräger Eckstoß mit der Kopf-Linie (border-collapse) */
 .km-table tbody tr:hover td { background: var(--km-color-inset); }
 /* Zeile mit festem Aktions-Platz: jede Zeile hat dieselbe letzte Zelle, Knöpfe werden nur dort eingefügt */
@@ -269,10 +281,10 @@ a.km-sidebar__item { text-decoration: none; }
 .km-table__group--plain td { box-shadow: none; }
 .km-table--compact td { padding: var(--km-space-xs) var(--km-space-m); }
 /* Name in der ersten Spalte (Link zur Projektkarte); Unterzeilen ohne Einrückung und Strich */
-.km-table__name { display: inline-block; width: max-content; max-width: 22rem; overflow: hidden; text-overflow: ellipsis; vertical-align: top; font-weight: var(--km-font-weight-strong); line-height: 1.25rem; color: var(--km-color-text); text-decoration: none; white-space: nowrap; } /* Name ist ein Wert: bricht nie; lange Namen enden mit „…“, der volle Name steht im Tooltip; alle Zeilen bleiben gleich hoch; width: max-content, sonst rechnet Firefox die Spalte zu schmal und der Name läuft in die Werkzeug-Angabe; alle Namen gleich kräftig, „in Arbeit“ zeigt nur der Strich */
+.km-table__name { display: inline-block; width: max-content; max-width: clamp(22rem, 30vw, 44rem); overflow: hidden; text-overflow: ellipsis; vertical-align: top; font-weight: var(--km-font-weight-strong); line-height: 1.25rem; color: var(--km-color-text); text-decoration: none; white-space: nowrap; } /* Name ist ein Wert: bricht nie; lange Namen enden mit „…“, der volle Name steht im Tooltip; alle Zeilen bleiben gleich hoch; width: max-content, sonst rechnet Firefox die Spalte zu schmal und der Name läuft in die Werkzeug-Angabe; alle Namen gleich kräftig, „in Arbeit“ zeigt nur der Strich */
 .km-table__name > .km-monogram, .km-table__name > svg { vertical-align: top; margin-right: var(--km-space-icon-text); } /* Kürzel neben dem Namen eine Stufe enger (Entscheidung 41): 6 statt 8 px */
 .km-table__name > .km-monogram, .km-table__name > img { flex: none; }
-.km-table__name > svg { width: 1.25rem; height: 1.25rem; } /* Symbol vor dem Namen so hoch wie die Namenszeile, sonst steht es höher als der Text (0.16.11) */
+.km-table__name > svg, .km-table__typ > svg { width: var(--km-component-table-icon-size); height: var(--km-component-table-icon-size); margin-block: calc((var(--km-component-monogram-size) - var(--km-component-table-icon-size)) / 2); } /* ein Symbol-Baustein für alle Tabellen (Lagebild-Symbol im Namen, Typ-Symbol vor dem Monogramm): kleiner als die Namenszeile und mittig zu ihr (0.19.3; vorher 1.25rem, 0.16.11) */
 a.km-table__name:hover { text-decoration: underline; text-underline-offset: var(--km-underline-offset); }
 a.km-table__name:visited { color: var(--km-color-text); } /* Name bleibt weiß, auch wenn schon angeklickt; Seitenregeln wie a:visited färben ihn sonst im Akzent */
 /* Sortierbare Spalte: <th class="km-table__sort" aria-sort="ascending|descending|none"> */
@@ -392,7 +404,8 @@ html, body { font-variant-numeric: normal; }
 .km-graph__svg { display: block; width: 100%; min-width: 68.75rem; max-width: none; height: auto; font-family: var(--km-font); }
 .km-graph__svg marker path { fill: var(--km-color-text-dim); fill: context-stroke; }
 .km-graph__e { fill: none; stroke: var(--km-color-text-dim); stroke-width: 1.5; opacity: 0.5; transition: opacity .15s, stroke .15s; }
-.km-graph__frage { stroke-dasharray: 5 4; }
+.km-graph__frage { stroke-dasharray: 5 4; stroke: var(--km-component-graph-frage); }
+.km-graph__rand feFlood { flood-color: var(--km-color-card); } /* Rand um hervorgehobene Linien in Kartenfarbe: Linie und Pfeilspitze bleiben sichtbar, wo andere Linien kreuzen */
 .km-graph__n > rect { fill: var(--km-color-inset); stroke: var(--km-color-border-card); stroke-width: 1; }
 .km-graph__n > rect[style] { stroke: var(--sg-k); stroke-width: 1.5; }
 .km-graph__n text { fill: var(--km-color-text); font-size: var(--km-font-size-xs); pointer-events: none; }
@@ -403,6 +416,8 @@ html, body { font-variant-numeric: normal; }
 .km-graph__svg.km-graph__an .km-graph__n.km-graph__ich > rect { stroke: var(--km-color-text); stroke-width: 2; }
 .km-graph__svg.km-graph__an .km-graph__e.km-graph__aus { opacity: 1; stroke: var(--km-color-accent); stroke-width: 2.6; }
 .km-graph__svg.km-graph__an .km-graph__e.km-graph__ein { opacity: 1; stroke: var(--km-color-attention); stroke-width: 2.6; }
+.km-graph__svg.km-graph__an .km-graph__e.km-graph__frage.km-graph__aus, .km-graph__svg.km-graph__an .km-graph__e.km-graph__frage.km-graph__ein { stroke: var(--km-component-graph-frage); }
+.km-graph__svg.km-graph__an .km-graph__e.km-graph__aus, .km-graph__svg.km-graph__an .km-graph__e.km-graph__ein { filter: url(#km-graph__rand); }
 .km-graph__ico { color: var(--km-color-accent); pointer-events: none; }
 .km-graph__kat { pointer-events: none; }
 .km-graph__sk { fill: var(--km-color-text-muted); font-size: var(--km-font-size-xs); font-weight: 600; letter-spacing: var(--km-tracking-caps); text-transform: uppercase; }
@@ -414,6 +429,7 @@ html, body { font-variant-numeric: normal; }
 .km-graph__katknopf[aria-pressed="true"] { border-color: var(--km-color-accent); color: var(--km-color-text); }
 .km-graph__linie { display: inline-flex; align-items: center; gap: var(--km-space-xs); }
 .km-graph__linie svg path { stroke: var(--km-color-text-muted); stroke-width: 1.5; fill: none; }
+.km-graph__linie svg path.km-graph__frage { stroke: var(--km-component-graph-frage); }
 .km-graph__zahl { fill: var(--km-color-text-muted); font-size: var(--km-font-size-xs); font-variant-numeric: tabular-nums; pointer-events: none; }
 .km-graph__zahl-l { font-weight: 400; font-size: var(--km-font-size-xs); color: var(--km-color-text-muted); border: var(--km-border-width) solid var(--km-color-border-card); padding: 0 var(--km-space-2xs); }
 .km-graph__info .km-graph__kopf { display: flex; gap: var(--km-space-xs); align-items: flex-start; }
@@ -752,6 +768,8 @@ details.km-section.km-focus > summary { background: transparent; }
 .km-timelog strong { color: var(--km-color-text); font-family: var(--km-font-mono); font-weight: 600; }
 .km-timelog__label { color: var(--km-color-text-dim); font-weight: 500; margin-right: var(--km-space-2xs); }
 .km-timelog__breakdown { color: var(--km-color-text-dim); font-size: var(--km-font-size-xs); font-family: var(--km-font-mono); }
+.km-table-wrap--schmal { width: fit-content; max-width: 100%; } /* Tabelle mit wenigen kurzen Spalten: nur so breit wie der Inhalt, statt die Spalten über die ganze Breite zu verteilen */
+.km-card__section > .km-timelog__fuss { margin: var(--km-space-s) 0 0; } /* Zeile unter der Tabelle im Bereich Time Log mit Abstand */
 .km-timelog__link { color: var(--km-color-text); text-decoration: underline; text-decoration-color: var(--km-color-border-card); }
 .km-timelog__link:hover { text-decoration-color: var(--km-color-text); }
 
@@ -953,8 +971,8 @@ details .km-details__body {
 .km-table--numbered td:first-child:has(> .km-table__name):not(:has(.km-monogram)) { --km-table-num-lh: 1.25rem; } /* Name ohne Monogramm (Symbol oder nur Text): Zahl mittig zur Namenszeile */ /* steht vorn ein Monogramm: mittig zum Monogramm wie im Dashboard */
 .km-table--numbered tbody { counter-reset: km-row; }
 .km-table--numbered tbody td:first-child { white-space: nowrap; } /* Nummer und Name bleiben in einer Zeile, auch bei langem Namen */
-.km-table--numbered tbody tr:not(.km-table__group) { counter-increment: km-row; }
-.km-table--numbered tbody tr:not(.km-table__group) > td:first-child::before { content: counter(km-row); display: inline-block; width: 1.4em; margin-right: var(--km-space-xs); text-align: right; vertical-align: top; font-family: var(--km-font-mono); font-size: var(--km-font-size-xs); line-height: var(--km-table-num-lh); color: var(--km-color-text-dim); }
+.km-table--numbered tbody tr:not(.km-table__group):not(.km-table__detail) { counter-increment: km-row; }
+.km-table--numbered tbody tr:not(.km-table__group):not(.km-table__detail) > td:first-child::before { content: counter(km-row); display: inline-block; width: 1.4em; margin-right: var(--km-space-xs); text-align: right; vertical-align: top; font-family: var(--km-font-mono); font-size: var(--km-font-size-xs); line-height: var(--km-table-num-lh); color: var(--km-color-text-dim); }
 
 /* ── Vorschaukarte (km-peek): schwebt neben dem Auslöser, Bild oben, Titel und Text darunter; nur Anzeige, keine Bedienung ── */
 .km-peek { position: fixed; z-index: 1000; display: none; width: 26rem; max-width: calc(100vw - 2rem); margin: 0; background: var(--km-color-card); border: var(--km-border-width) solid var(--km-color-border-card); box-shadow: 0 var(--km-space-s) var(--km-space-2xl) var(--km-shadow); pointer-events: none; }
@@ -1058,6 +1076,15 @@ button, button:hover, .km-iconbtn, .km-iconbtn:hover, .km-iconbtn:focus-visible,
 .km-dnd__grip:active { cursor: grabbing; }
 .km-dnd__grip svg { width: var(--km-icon-2xs); height: var(--km-icon-s); display: block; }
 .km-table tbody tr.km-table__row--dragging { background: var(--km-color-inset); opacity: 0.9; }
+/* Spalten verschieben (0.17.0, kmTabelle.spaltenZiehen): Kopf mit Greifzeiger, gezogene Spalte abgeblendet, Einfügelinie links oder rechts am Zielkopf */
+.km-table th.km-table__th--ziehbar { cursor: grab; }
+.km-table th.km-table__th--zieht { opacity: var(--km-opacity-disabled); }
+.km-table th.km-table__drop--vor { box-shadow: inset var(--km-drop-line) 0 0 var(--km-color-accent); }
+.km-table th.km-table__drop--nach { box-shadow: inset calc(-1 * var(--km-drop-line)) 0 0 var(--km-color-accent); }
+/* Hoch/Runter in der Spaltenauswahl (Weg ohne Maus, Seitenregel „Reihenfolge verwalten“) */
+.km-colpicker__panel label .km-colpicker__move { margin-left: auto; display: inline-flex; gap: var(--km-space-2xs); }
+.km-colpicker__panel label .km-colpicker__move + .km-colpicker__move { margin-left: 0; }
+.km-table.km-table--ohne-aktionen .km-table__actions { display: none; } /* kmTabelle.leereAktionen: keine leere Spalte, wenn keine sichtbare Zeile Aktionen hat (0.17.0) */
 .km-brand__select {
     display: flex;
     align-items: center;
@@ -1242,6 +1269,9 @@ a.km-task__id { text-decoration: none; }
 .km-segmented__btn:disabled .km-segmented__count { color: inherit; }
 .km-results .km-results__showall { margin-top: var(--km-space-xs); }
 .km-task.km-task--treffer { outline: var(--km-border-width-strong) solid var(--km-color-focus); outline-offset: var(--km-focus-offset); } /* Ziel eines Suchtreffers, kurz hervorgehoben */
+.km-card.km-card--treffer { animation: km-treffer 0.6s ease-in-out 3; outline: var(--km-border-width-strong) solid var(--km-color-focus); outline-offset: var(--km-focus-offset); } /* Sprungziel (z. B. „zur Karte“ aus der Skill-Grafik), blitzt kurz auf */
+@keyframes km-treffer { 50% { outline-color: transparent; } }
+@media (prefers-reduced-motion: reduce) { .km-card.km-card--treffer { animation: none; } }
 
 /* ── Kontrollkästchen (2026-11-08): ein Baustein für Aufgaben, Spaltenauswahl und Demo-Schalter; kompakte Fassung der KERN-Checkbox
    (gleiche Bildsprache: 2-px-Rand, Haken, Fokusrahmen). Für Formulare gilt die KERN-Checkbox kern-form-check__checkbox (32 px). ── */
@@ -1295,7 +1325,7 @@ button.km-info, button.km-infoi { cursor: pointer; }
 .km-demo[aria-checked="true"] i { background: var(--km-color-accent); border-color: var(--km-color-accent); }
 .km-demo[aria-checked="true"] i::after { left: calc(100% - var(--km-space-3xs)); transform: translateX(-100%); background: var(--km-color-on-accent); }
 /* Knöpfe: Grundform und Hover wie km-iconbtn; Bedeutung bleibt (gestrichelt = zurückstellen, rot = löschen, gefüllt = gewählt) */
-.km-toolbar__btn, .km-sync, .km-footer__reset, .km-totop, .km-colpicker__set, .km-colpicker__btn, .km-suggest__promote, .km-suggest__demote, .km-task__confirm button { font-family: var(--km-font-mono); font-size: var(--km-font-size-xs); border-radius: 0; cursor: pointer; }
+.km-toolbar__btn, .km-sync, .km-footer__reset, .km-totop, .km-colpicker__set, .km-colpicker__btn, .km-suggest__promote, .km-suggest__demote, .km-task__confirm button { font-family: var(--km-font-mono); font-size: var(--km-font-size-xs); border-radius: var(--km-radius); cursor: pointer; }
 .km-toolbar__btn:hover, .km-sync:hover:not(:disabled), .km-footer__reset:hover, .km-totop:hover, .km-colpicker__set:hover, .km-colpicker__btn:hover, .km-suggest__promote:hover, .km-task__confirm button:not(.km-task__confirm-yes):hover { color: var(--km-color-text); border-color: var(--km-color-border-section); background: transparent; }
 .km-suggest__demote:hover { color: var(--km-color-feedback-danger); border-color: var(--km-color-feedback-danger); }
 .km-colpicker__btn:hover { background: var(--km-color-inset); }
@@ -1314,10 +1344,12 @@ button.km-info, button.km-infoi { cursor: pointer; }
 .km-graph__l-ein { color: var(--km-color-attention); font-weight: 600; } /* Gegenstück zu km-graph__l-aus: eingehende Verbindungen */
 .km-graph__koepfe, .km-graph__es, .km-graph__ns { isolation: isolate; } /* SVG-Ebenen: Spaltenköpfe, Kanten, Knoten (Reihenfolge = Stapelung) */
 
-.km-table td:has(> .km-table__tool), .km-table th:has(> .km-table__tool) { position: relative; padding-right: calc(var(--km-space-m) + var(--km-table-tool-w) + var(--km-space-xl)); } /* Luft vor dem Werkzeug 24 statt 12 px: Firefox rechnet die Namenszelle ein paar Pixel zu knapp, ⓘ stieß an „Code“ */ /* Werkzeug als schmale Spalte rechts in der Namenszelle (Code, Desktop, Archiv); Platz ist reserviert, Namen kürzen davor */
-.km-table__tool { --km-table-tool-w: 7.5rem; position: absolute; right: var(--km-space-m); top: var(--km-space-s); display: inline-flex; align-items: center; gap: var(--km-space-icon-text); width: var(--km-table-tool-w); line-height: 1.25rem; font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-regular); letter-spacing: 0; text-transform: none; color: var(--km-color-text-muted); white-space: nowrap; }
+.km-table td:has(> .km-table__tool:not(.km-table__tool--spalte)), .km-table th:has(> .km-table__tool:not(.km-table__tool--spalte)) { position: relative; padding-right: calc(var(--km-space-m) + var(--km-table-tool-w) + var(--km-space-xl)); } /* Luft vor dem Werkzeug 24 statt 12 px: Firefox rechnet die Namenszelle ein paar Pixel zu knapp, ⓘ stieß an „Code“ */ /* Werkzeug als schmale Spalte rechts in der Namenszelle (Code, Desktop, Archiv); Platz ist reserviert, Namen kürzen davor */
+.km-table__tool { --km-table-tool-w: 7.5rem; position: absolute; right: var(--km-space-m); top: var(--km-name-oben, var(--km-space-s)); display: inline-flex; align-items: center; gap: var(--km-space-icon-text); width: var(--km-table-tool-w); line-height: 1.25rem; font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-regular); letter-spacing: 0; text-transform: none; color: var(--km-color-text-muted); white-space: nowrap; }
 .km-table { --km-table-tool-w: 7.5rem; } /* Platz für Icon, „WERKZEUG“ in Versalien und Sortierpfeil im Kopf (gemessen 6,9rem), damit nichts in die Nachbarspalte ragt */
 .km-table__tool::before { content: ""; flex: none; width: var(--km-dot); height: var(--km-dot); background: var(--km-dot-color, var(--km-color-text-dim)); }
+.km-table__tool.km-table__tool--spalte { position: static; width: auto; vertical-align: top; } /* Werkzeug als eigene Spalte statt rechts in der Namenszelle: verschiebbar, ausblendbar, sortierbar wie jede Spalte */
+.km-table.km-table--knapp > thead > tr > th:not(.km-table__actions, .km-table__rest) { width: 1%; } .km-table.km-table--knapp > thead > tr > th.km-table__rest { width: 100%; } /* 100 % statt auto: Firefox/Zen gaben den Platz sonst auch der Aktionszelle */ .km-table.km-table--knapp .km-chips { flex-wrap: nowrap; } .km-table.km-table--knapp > tbody > tr:not(.km-table__detail) > td { white-space: nowrap; } /* knapp: keine Zelle bricht um, auch nicht, bevor kmTabelle die Rollen setzt (sonst kurz doppelt hohe Zeilen beim Laden) */ /* Variante: jede Spalte nur so breit wie ihr Inhalt (Breite nur am Kopf, sonst zählt jede Zelle als Prozentspalte); den freien Platz nimmt die letzte sichtbare Spalte vor den Aktionen (km-table__rest, setzt kmTabelle.restSpalte), Aktionen bleiben schmal und rechts */
 th > .km-table__tool { top: 50%; transform: translateY(-50%); line-height: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; }
 th > .km-table__tool::before { display: none; }
 
@@ -1389,9 +1421,16 @@ button.km-table__tool:hover, button.km-table__tool[aria-pressed="true"] { color:
 .km-table td.km-table__nowrap:has(> .km-table__name), .km-table td:has(> a.km-table__name) { width: auto; } /* die Namensspalte nimmt den freien Platz, sonst teilt der Browser ihn auf alle 1-%-Spalten und die Aktionsspalte wird breiter als ihre Knöpfe */ /* Kennungen und Werte so schmal wie ihr Inhalt, Fließtext-Spalten bekommen den Rest */
 .km-table__nowrap, .km-table__nowrap * { white-space: nowrap; }
 .km-table__text--wide { min-width: 26rem; width: 30rem; }
+.km-table.km-table--text-frei td.km-table__nowrap:has(> .km-table__name) { width: 1%; } .km-table.km-table--text-frei td.km-table__text { width: auto; min-width: 16rem; max-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* einzeilig, ganzer Text im Tooltip (title setzt die Seite) */ /* Variante: der Name nimmt nur seine Breite, die Fließtext-Spalte den freien Platz, damit Zeilen einzeilig bleiben */
 .km-tables { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: var(--km-space-block); align-items: start; } /* Raster kleiner Tabellen (z. B. Kennzahlen je Gruppe); ersetzt km-stats (2026-11-08) */
 .km-table__num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums slashed-zero; font-weight: var(--km-font-weight-strong); } /* Zahlenspalte: rechtsbündig, gleich breite Ziffern */
 .km-table th.km-table__num { text-align: right; font-weight: var(--km-font-weight-medium); }
+.km-table.km-table--knapp :is(.km-table__num, .km-table__hours) { text-align: left; } /* knappe Tabelle: Spalten sind nur so breit wie ihr Inhalt, Zahlen stehen linksbündig wie alle anderen Spalten */
+.km-table.km-table--messen > tbody > tr:not(.km-table__detail) { display: table-row !important; } .km-table.km-table--knapp > thead > tr > th[style*="--km-th-min"]::before { content: ""; display: block; height: 0; width: var(--km-th-min); } /* feste Mindestbreite als Inhalt: Breitenangaben am Kopf übergehen Chrome und Firefox neben einer 100-%-Spalte */ /* kmTabelle.breitenFest: kurz alle Zeilen ins Layout, damit die Spaltenbreiten nicht vom Filter abhängen */
+.km-table.km-table--laedt { visibility: hidden; } /* Tabelle wird noch von Skripten fertig gebaut (Symbole, Balken, Aktionen): erst danach zeigen, sonst springen die Spaltenbreiten beim Laden; die Seite nimmt die Klasse bei DOMContentLoaded ab */
+.km-table.km-table--knapp { --km-component-table-knapp-luft: clamp(var(--km-space-m), 1.2vw - 0.5rem, 1.75rem); } /* Abstand zwischen den Spalten wächst mit der Bildschirmbreite: bis rund 2000 px 16 px je Seite, bei 2560 px rund 23 px, höchstens 28 px */
+.km-table.km-table--knapp > :is(thead, tbody) > tr:not(.km-table__detail) > :is(td, th) { padding-left: var(--km-component-table-knapp-luft); padding-right: var(--km-component-table-knapp-luft); }
+.km-table.km-table--knapp > :is(thead, tbody) > tr:not(.km-table__detail) > :first-child { padding-left: var(--km-space-l); } .km-table.km-table--knapp > :is(thead, tbody) > tr:not(.km-table__detail) > :last-child { padding-right: var(--km-space-l); } /* Außenkanten bleiben wie in jeder Tabelle */
 
 .km-table td a:not([class]), .km-table td a:not([class]):visited { color: inherit; font-family: inherit; font-weight: inherit; text-decoration: none; } /* Links in Zellen in Textfarbe, besucht gleich */
 .km-table td a:not([class]):hover { text-decoration: underline; text-underline-offset: var(--km-underline-offset); }
@@ -2022,8 +2061,9 @@ textarea.km-field__control { font-size: var(--km-typography-font-size-body); lin
 .km-shell__top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--km-space-s) var(--km-space-xs); }
 .km-shell__brand { flex: 1 1 auto; min-width: 0; font-family: var(--km-font-display); font-size: var(--km-font-size-m); font-weight: var(--km-font-weight-strong); color: var(--km-color-text); text-decoration: none; }
 .km-shell__brand:hover { color: var(--km-color-accent); }
-.km-shell__controls { order: 3; flex: 1 0 100%; display: flex; flex-wrap: wrap; align-items: center; gap: var(--km-space-xs); }
-.km-shell__top { --km-header-control: calc(1rem + 2 * var(--km-space-2xs) + 2 * var(--km-border-width)); } /* 26 px wie die Kopfzeile des Dashboards */
+.km-shell__controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--km-space-xs); }
+.km-shell__top > .km-shell__controls { order: 3; flex: 1 0 100%; } /* im Kopf der Leiste eigene Zeile; als eigene Zeile unter dem Kopf (Decision Records UI) ohne Umsortierung */
+.km-shell__top, .km-shell__controls { --km-header-control: calc(1rem + 2 * var(--km-space-2xs) + 2 * var(--km-border-width)); } /* 26 px wie die Kopfzeile des Dashboards */
 .km-shell__controls > :is(.km-segmented, .km-iconbtn) { box-sizing: border-box; height: var(--km-header-control); } /* Sprachwahl und Modus-Knopf gleich hoch */
 .km-shell__controls > .km-iconbtn { width: var(--km-header-control); }
 .km-shell__controls > .km-iconbtn svg { width: var(--km-icon-s); height: var(--km-icon-s); }
@@ -2038,7 +2078,7 @@ textarea.km-field__control { font-size: var(--km-typography-font-size-body); lin
   .km-shell__nav.km-sidebar--rail > :not(.km-shell__top) { display: none; }
   .km-shell__nav.km-sidebar--rail .km-shell__brand { display: block; }
   .km-shell__nav.km-sidebar--rail .km-shell__controls { display: flex; }
-  .km-shell__controls { order: 0; flex: none; }
+  .km-shell__top > .km-shell__controls { order: 0; flex: none; }
   .km-shell__nav .km-sidebar__toggle { margin-left: 0; box-sizing: border-box; width: var(--km-header-control); height: var(--km-header-control); min-height: 0; } /* schmal steht der Knopf neben Sprachwahl und Modus: gleich hoch */
   .km-shell__nav:not(.km-sidebar--rail) .km-sidebar__toggle svg { transform: rotate(90deg); }
   .km-shell__nav.km-sidebar--rail .km-sidebar__toggle svg { transform: rotate(-90deg); }
@@ -2188,3 +2228,177 @@ a.km-button { text-decoration: none; }
 .km-prose.km-prose > .km-callout--quote { margin-block: var(--km-space-2xl); }
 .km-prose.km-prose > .km-callout--quote + * { margin-block-start: var(--km-space-2xl); }
 .km-chapters--breit { --km-component-chapters-width: 19rem; } /* breitere Kapitelleiste, lange Zwischentitel bleiben ganz */
+
+/* ── 0.18.0 „Wissen“: Bausteine, die vorher Seitenregeln waren ── */
+/* Name mit Unterzeile im Seitenkopf: <a class="km-shell__brand km-header__title"><img class="km-header__icon">…<span class="km-shell__titles"><span>Name</span><span class="km-shell__claim">Claim</span></span></a>.
+   Logo mittig zur ersten Zeile (globale Gestaltungsregel), Einklapp-Knopf bleibt rechts in derselben Zeile. */
+.km-shell__titles { display: grid; min-width: 0; }
+.km-shell__claim { font-family: var(--km-font); font-size: var(--km-font-size-xs); font-weight: var(--km-font-weight-regular); letter-spacing: 0; line-height: 1.35; color: var(--km-color-text-dim); white-space: normal; }
+.km-shell__brand:has(.km-shell__claim) { align-items: flex-start; white-space: normal; }
+.km-shell__brand:has(.km-shell__claim) > .km-header__icon { margin-top: calc((1lh - var(--km-component-monogram-size)) / 2); }
+.km-shell__nav:not(.km-sidebar--rail) > .km-shell__top:has(.km-shell__claim) { flex-wrap: nowrap; align-items: center; }
+/* Werkzeugzeile der Seitenleiste (km-shell__tools, zusammen mit km-toolbar): Suche füllt die Zeile, Knöpfe daneben quadratisch in Höhe der Suche; eingeklappt (Rail) ausgeblendet */
+.km-shell__tools { flex-wrap: nowrap; }
+.km-shell__tools > .km-searchbox { flex: 1 1 auto; min-width: 0; }
+.km-shell__tools > .km-iconbtn { aspect-ratio: 1; width: auto; padding: 0; }
+.km-shell__tools > .km-iconbtn svg { width: var(--km-icon-s); height: var(--km-icon-s); }
+.km-sidebar--rail .km-shell__tools { display: none; }
+/* Inhalt im Seitengerüst mit Innenabstand (km-shell__content, verallgemeinert aus lk-inhalt im Local AI Guide); leere Kapitelleiste ausgeblendet */
+.km-shell__content { box-sizing: border-box; padding: var(--km-space-xl) var(--km-space-2xl) var(--km-space-2xl); }
+@media (max-width: 54rem) { .km-shell__content { padding: var(--km-space-l) var(--km-space-m) var(--km-space-2xl); } }
+.km-chapters__nav[hidden] { display: none; }
+/* Knopfzeile im Kopf eines Dokuments (km-hero mit km-toolbar unter der Meta-Zeile): Luft wie zwischen Zeilen einer Gruppe */
+.km-hero > .km-toolbar { margin-top: var(--km-space-s); }
+/* Meta-Zeile unter der Einleitung (km-hero: Titel, km-lead, km-metaline): Luft wie zwischen Titel und Einleitung „Aufbau schöner“ */
+.km-hero > .km-lead + .km-metaline { margin-top: var(--km-space-s); }
+/* Icon-Knopf ohne Text im Seitenkopf quadratisch, so breit wie hoch */
+.km-header__actions .km-iconbtn:not(.km-iconbtn--label) { aspect-ratio: 1; width: auto; padding: 0; justify-content: center; }
+
+
+/* ── km-finder: Suche als Fenster über der Seite, Trefferliste links, Vorschau rechts ── */
+.km-finder { width: 96vw; height: 94vh; max-width: none; max-height: none; padding: 0; border: var(--km-border-width) solid var(--km-color-border-card); border-radius: 0; background: var(--km-color-card); color: var(--km-color-text); font-family: var(--km-font); box-shadow: 0 1.5rem 4rem rgb(0 0 0 / .45); }
+.km-finder[open] { display: flex; flex-direction: column; position: fixed; inset: 0; margin: auto; } /* mittig, auch wenn Seitenregeln dialog-Ränder zurücksetzen */
+.km-finder::backdrop { background: rgb(0 0 0 / .55); }
+.km-finder__kopf { display: flex; align-items: center; gap: var(--km-space-xs); padding: var(--km-space-s) var(--km-space-m); border-bottom: var(--km-border-width) solid var(--km-color-border-card); }
+.km-finder__kopf svg { width: var(--km-icon-s); height: var(--km-icon-s); flex: none; color: var(--km-color-text-muted); fill: none; stroke: currentColor; stroke-width: 2; }
+.km-finder .km-finder__eingabe, .km-finder .km-finder__eingabe:focus { border: 0; outline: 0; box-shadow: none; border-radius: 0; height: auto; min-height: 0; }
+.km-finder__eingabe { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--km-color-text); font: inherit; font-size: var(--km-font-size-l, 1.25rem); padding: var(--km-space-2xs) 0; }
+.km-finder__eingabe::placeholder { color: var(--km-color-text-dim); }
+.km-finder__taste { font-size: var(--km-font-size-xs); color: var(--km-color-text-muted); border: var(--km-border-width) solid var(--km-color-border-card); padding: 0 var(--km-space-2xs); white-space: nowrap; }
+.km-finder__chips { display: flex; flex-wrap: wrap; gap: var(--km-space-2xs); padding: var(--km-space-xs) var(--km-space-m); border-bottom: var(--km-border-width) solid var(--km-color-border-card); }
+.km-finder__chip { display: inline-flex; align-items: center; gap: var(--km-space-2xs); border: var(--km-border-width) solid var(--km-color-border-card); background: transparent; color: var(--km-color-text-muted); font: inherit; font-size: var(--km-font-size-xs); padding: var(--km-space-3xs) var(--km-space-xs); cursor: pointer; }
+.km-finder__chip span { color: var(--km-color-text-dim); }
+.km-finder__chip svg, .km-finder__gruppe svg, .km-finder__meta--icon svg { width: var(--km-icon-xs); height: var(--km-icon-xs); flex: none; fill: none; stroke: currentColor; stroke-width: 2; }
+.km-finder__gruppe { display: flex; align-items: center; gap: var(--km-space-2xs); }
+.km-finder__meta--icon { display: flex; align-items: center; gap: var(--km-space-2xs); white-space: normal; }
+.km-finder__chip:hover { border-color: var(--km-color-accent); color: var(--km-color-text); }
+.km-finder__chip[aria-pressed="true"] { border-color: var(--km-color-accent); background: var(--km-color-accent); color: var(--km-color-on-accent); }
+.km-finder__chip[aria-pressed="true"] span { color: inherit; }
+.km-finder__chip--rechts { margin-left: auto; }
+.km-finder__haupt { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(22rem, 2fr) minmax(0, 3fr); }
+.km-finder__liste { overflow-y: auto; padding: var(--km-space-2xs) 0 var(--km-space-m); border-right: var(--km-border-width) solid var(--km-color-border-card); }
+.km-finder__gruppe { margin: var(--km-space-s) var(--km-space-m) var(--km-space-3xs); font-size: var(--km-font-size-xs); text-transform: uppercase; letter-spacing: var(--km-tracking-caps); color: var(--km-color-text-dim); }
+.km-finder__gruppe span { margin-left: var(--km-space-2xs); letter-spacing: 0; }
+.km-finder__treffer { display: grid; grid-template-columns: var(--km-icon-s) minmax(0, 1fr); column-gap: var(--km-space-s); align-items: start; padding: var(--km-space-s) var(--km-space-m); border-left: var(--km-border-width-accent) solid transparent; border-bottom: var(--km-border-width) solid var(--km-color-border-card); cursor: pointer; }
+.km-finder__zeile { display: flex; align-items: baseline; gap: var(--km-space-s); min-width: 0; }
+.km-finder__zeile .km-finder__titel { flex: 1; min-width: 0; }
+.km-finder__datum { flex: none; font-size: var(--km-font-size-xs); color: var(--km-color-text-dim); font-variant-numeric: tabular-nums; }
+.km-finder__treffer svg { width: var(--km-icon-s); height: var(--km-icon-s); margin-top: 0.15em; fill: none; stroke: currentColor; stroke-width: 2; color: var(--km-color-text-muted); }
+.km-finder__treffer[aria-selected="true"], .km-finder__treffer:hover { background: var(--km-color-inset); }
+.km-finder__treffer[aria-selected="true"] { border-left-color: var(--km-color-accent); }
+.km-finder__titel { font-weight: 600; font-size: var(--km-font-size-s); line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.km-finder__meta { font-size: var(--km-font-size-xs); color: var(--km-color-text-dim); margin-top: var(--km-space-3xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.km-finder__auszug { grid-column: 2; font-size: var(--km-font-size-xs); line-height: 1.55; color: var(--km-color-text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: var(--km-space-3xs); }
+.km-finder mark { background: var(--km-color-accent); color: var(--km-color-on-accent); padding: 0 var(--km-space-3xs); }
+.km-finder__vorschau { overflow-y: auto; padding: var(--km-space-l) var(--km-space-xl, 2.5rem); display: flex; flex-direction: column; gap: var(--km-space-m); }
+.km-finder__vorschau > * { max-width: 46rem; flex: none; } /* Lesebreite; flex: none, sonst staucht die Spalte Elemente mit overflow auf null Höhe */
+.km-finder__bild { width: 100%; max-height: 38vh; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: var(--km-border-width) solid var(--km-color-border-card); background: var(--km-color-inset); }
+.km-finder__vorschau h3 { margin: 0; font-size: var(--km-font-size-l); line-height: 1.25; }
+.km-finder__stellen { display: flex; flex-direction: column; gap: var(--km-space-s); }
+.km-finder__stelle { margin: 0; padding: var(--km-space-s) var(--km-space-m); background: var(--km-color-inset); border-left: var(--km-border-width-accent) solid var(--km-color-border-card); }
+.km-finder__ort { display: block; font-size: var(--km-font-size-xs); text-transform: uppercase; letter-spacing: var(--km-tracking-caps); color: var(--km-color-text-dim); margin-bottom: var(--km-space-2xs); }
+.km-finder__stelle p { margin: 0; font-size: var(--km-font-size-s); line-height: 1.65; color: var(--km-color-text); }
+.km-finder__aktionen { display: flex; flex-wrap: wrap; gap: var(--km-space-xs); }
+.km-finder__leer { padding: var(--km-space-l) var(--km-space-m); color: var(--km-color-text-muted); font-size: var(--km-font-size-s); }
+.km-finder__fuss { display: flex; gap: var(--km-space-m); flex-wrap: wrap; padding: var(--km-space-xs) var(--km-space-m); border-top: var(--km-border-width) solid var(--km-color-border-card); font-size: var(--km-font-size-xs); color: var(--km-color-text-dim); }
+@media (max-width: 48rem) { .km-finder { width: 100vw; height: 100dvh; } .km-finder__haupt { grid-template-columns: 1fr; } .km-finder__vorschau { display: none; } .km-finder__liste { border-right: 0; } }
+
+/* ── km-card__section: aufklappbarer Bereich in einer Karte (0.19.3: „Aufgaben genau so wie Dokumente mit Icon und Headline und einem Trenner über die ganze Box, damit klar ist, es sind Bereiche“).
+   <details class="km-card__section"><summary><svg class="km-icon">…</svg>Titel <span class="km-card__section-count">12</span></summary>…</details>; Kopf wie km-subhead, Pfeil hinter dem Titel wie km-table__chevron ── */
+.km-card__section { margin: 0; border-top: var(--km-border-width) solid var(--km-color-border-card); }
+.km-card__section > summary { display: flex; align-items: center; gap: var(--km-space-icon-text); margin: 0; padding: var(--km-space-m) 0; list-style: none; cursor: pointer; user-select: none; font-size: var(--km-font-size-s); font-weight: var(--km-font-weight-strong); letter-spacing: var(--km-tracking-caps); text-transform: uppercase; color: var(--km-color-text-muted); }
+.km-card__section > summary::-webkit-details-marker { display: none; }
+.km-card__section > summary:hover { color: var(--km-color-text); }
+.km-card__section > summary > svg { flex: none; width: var(--km-icon-s); height: var(--km-icon-s); }
+.km-card__section-count { font-weight: var(--km-font-weight-regular); color: var(--km-color-text-dim); }
+.km-card__section > summary::after { content: ""; flex: none; width: 0.45em; height: 0.45em; margin-left: var(--km-space-2xs); border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-0.15em) rotate(45deg); transition: transform .15s; }
+.km-card__section[open] > summary::after { transform: translateY(0.1em) rotate(-135deg); }
+.km-card__section[open] > summary { margin-bottom: var(--km-space-xs); }
+.km-card__section:not([open]) > :not(summary) { display: none; } /* Firefox/Zen lassen sonst Ränder des verborgenen Inhalts stehen: unter dem Kopf 12 px mehr als darüber */
+.km-card__section[open] { padding-bottom: var(--km-space-m); } /* Kopf und Ende eines Bereichs mit demselben Abstand, etwas größer */
+.km-card__body > .km-card__section > summary { margin: 0; } .km-card__body > .km-card__section[open] > summary { margin-bottom: var(--km-space-xs); } /* gegen Seitenregeln wie details[open] summary: Kopf zugeklappt ohne Rand unten */ /* offener Bereich endet mit demselben Abstand wie der Kopf */
+.km-card__section + .km-card__section { margin-top: calc(-1 * var(--km-space-group)); } /* Bereiche stehen direkt untereinander, nur die Linie trennt */
+.km-card > .km-card__body > .km-card__section { margin-inline: calc(-1 * var(--km-space-card)); padding-inline: var(--km-space-card); } /* Linie über die ganze Karte, Inhalt bleibt an seiner Kante */
+.km-card__badges > .km-chip { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* lange Chips (Pfade) nur kürzen, wenn die Zeile nicht reicht; voller Text im title */
+
+/* ── km-table__detail: aufgeklappte Zeile unter einer Tabellenzeile mit dem Inhalt des Eintrags ── */
+.km-table tbody tr.km-table__row--aufklappbar { cursor: pointer; }
+.km-table tbody tr.km-table__row--aufklappbar:hover > td { background: var(--km-color-inset); }
+.km-table tbody tr.km-table__row--offen > td { background: var(--km-color-inset); } /* offene Zeile nur über die Fläche hervorgehoben, ohne Linie */
+.km-table tbody tr.km-table__row--offen .km-table__name { color: var(--km-color-accent); }
+/* offene Zeile samt Details mit durchgehendem Rahmen in der Stärke der Zeilenlinie; als Schatten nach innen, damit die Tabelle nicht springt */
+.km-table tbody tr.km-table__row--offen, .km-table tbody tr.km-table__detail { --km-offen-farbe: color-mix(in srgb, var(--km-color-accent) 45%, var(--km-color-border-card)); --km-offen-breite: var(--km-border-width); } /* dezent, für alle Zeilen gleich */
+.km-table tbody tr.km-table__row--offen > td, .km-table tbody tr.km-table__detail > td { position: relative; }
+.km-table tbody tr.km-table__row--offen > td::after, .km-table tbody tr.km-table__detail > td::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border: 0 solid var(--km-offen-farbe); }
+.km-table tbody tr.km-table__row--offen > td::after { border-top-width: var(--km-offen-breite); }
+.km-table tbody tr.km-table__row--offen > td:first-child::after { border-left-width: var(--km-offen-breite); }
+.km-table tbody tr.km-table__row--offen > td:last-child::after { border-right-width: var(--km-offen-breite); }
+.km-table tbody tr.km-table__detail > td::after { border-width: 0 var(--km-offen-breite) var(--km-offen-breite); } /* Rahmen als Ebene über dem Inhalt: Trennlinien der Bereiche laufen bis an den Rand, unterbrechen ihn aber nicht */
+.km-table tbody tr.km-table__detail > td { padding: 0 0 var(--km-space-m); background: var(--km-color-inset); white-space: normal; }
+.km-table__detail-inhalt { position: sticky; left: 0; box-sizing: border-box; padding: 0 var(--km-space-m) 0 var(--km-detail-einzug, var(--km-space-m)); white-space: normal; } /* normal: Zellen der Übersicht verbieten Umbrüche, die Karte darf das nicht erben */ /* bleibt beim waagerechten Scrollen der Tabelle im Bild; Breite setzt das Skript auf die sichtbare Breite */
+.km-table__detail-inhalt > .km-card { margin: 0; padding-inline: 0; border: 0; background: transparent; }
+.km-table__detail-inhalt > .km-card > .km-card__body > .km-card__section { margin-inline: calc(-1 * var(--km-detail-einzug, var(--km-space-m))) calc(-1 * var(--km-space-m)); padding-inline: var(--km-detail-einzug, var(--km-space-m)) var(--km-space-m); } /* Linie über die ganze aufgeklappte Zeile; --km-detail-einzug = Innenrand der ersten Zelle, setzt das Seitenskript */
+.km-table__detail-inhalt .km-card__body > .km-chips:not(:has(> :not(a.km-chip))) { display: none; } /* Link-Chips stehen in der Zeile: leere Chip-Zeile nimmt keinen Platz */
+.km-table__detail-inhalt > .km-card:has(> .km-card__body > .km-card__section) { padding-bottom: 0; } .km-table tbody tr.km-table__detail > td:has(.km-card__section) { padding-bottom: 0; } .km-table__detail-inhalt .km-card__body > .km-card__section ~ :not(.km-card__section, [hidden]) { margin-top: 0; margin-bottom: var(--km-space-s); } /* letzter Bereich schließt mit seinem eigenen Abstand an die nächste Zeile (sonst 56 statt 12 px unter „Aufgaben“) */
+.km-table__detail-inhalt .km-intro__media img { border-top: 0; }
+/* Breite Bildschirme: Text bleibt in Lesebreite (DDR „Text schmal, Tabellen und Abbildungen breit“),
+   Panels verteilen sich in Spalten von Lesebreite statt zwei überbreiten Hälften; Tabellen und Bilder nutzen weiter die volle Breite */
+.km-table__detail-inhalt :is(.km-intro__text, .km-details__body, .km-panel li, .km-card__body > p) { max-width: var(--km-metric-measure-wide); } /* Untertitel im Kopf bleibt einzeilig */
+.km-table__detail-inhalt .km-panels { grid-template-columns: repeat(auto-fill, minmax(min(var(--km-metric-measure-default), 100%), 1fr)); }
+/* Große Breite: erster Block (Bild + Text) links, Panels rechts untereinander in Lesebreite,
+   alles Weitere (Stand, Tabellen, Aufgaben) darunter über die volle Breite. Bezug ist die Breite der aufgeklappten Zeile, nicht des Fensters. */
+.km-table__detail-inhalt { container-type: inline-size; }
+@container (min-width: 75rem) {
+  .km-table__detail-inhalt > .km-card > .km-card__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, var(--km-metric-measure-wide)); align-items: start; }
+  .km-table__detail-inhalt > .km-card > .km-card__body > * { grid-column: 1 / -1; }
+  .km-table__detail-inhalt > .km-card > .km-card__body > :first-child:not(.km-panels) { grid-column: 1; grid-row: 1; }
+  .km-table__detail-inhalt > .km-card > .km-card__body > .km-panels { grid-column: 2; grid-row: 1; grid-template-columns: minmax(0, 1fr); }
+}
+@container (min-width: 110rem) { /* sehr breit: Panels nebeneinander, je in Lesebreite */
+  .km-table__detail-inhalt > .km-card > .km-card__body { grid-template-columns: minmax(0, 1fr) minmax(0, calc(2 * var(--km-metric-measure-wide) + var(--km-space-group))); }
+  .km-table__detail-inhalt > .km-card > .km-card__body > .km-panels { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
+} .km-table__detail-inhalt .km-card__actions { display: none; } /* Vorschaubild ohne eigene Akzentlinie, Funktionsknöpfe stehen schon in der Zeile darüber */ /* ohne Strich links und ohne eigenen Einzug: Text beginnt an derselben Kante wie die Zeilen darüber */
+/* Pfeil zum Auf- und Zuklappen am Ende der Namenszelle (0.19.3: „da soll ein Pfeil hinter sein“): eigenes Element, nicht im Namen, sonst schneidet die Kürzung mit „…“ ihn ab (Firefox) */
+.km-table__chevron { display: inline-block; width: 0.45em; height: 0.45em; margin-left: var(--km-space-xs); vertical-align: 0.3em; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); color: var(--km-color-text-muted); transition: transform .15s; }
+.km-table tbody tr.km-table__row--offen .km-table__chevron { transform: translateY(0.25em) rotate(-135deg); color: var(--km-color-accent); }
+/* Typ-Symbol vor dem Monogramm, direkt nach der Zahl (0.19.3, wie die Symbole im Lagebild); Name im title */
+.km-table__typ { display: inline-flex; vertical-align: top; margin-right: var(--km-space-icon-text); color: var(--km-color-text-muted); }
+/* In der aufgeklappten Zeile entfällt, was die Zeile schon zeigt: Titel (steht als Name darüber) und die Links am Kartenende (Links-Spalte, ↗ hinter dem Namen) */
+.km-table__detail-inhalt .km-card__title, .km-table__detail-inhalt .km-card__body > .km-chips > a.km-chip { display: none; }
+/* Kleines Symbol hinter dem Namen: öffnet die lokale Seite des Eintrags (Prototyp, App), der Name selbst klappt auf (0.19.3) */
+.km-table__open { display: inline-flex; vertical-align: top; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; margin-left: var(--km-space-3xs); color: var(--km-color-text-muted); }
+.km-table__open:hover, .km-table__open:focus-visible { color: var(--km-color-accent); }
+.km-table__open svg { width: var(--km-icon-xs); height: var(--km-icon-xs); fill: none; stroke: currentColor; stroke-width: 2; }
+/* km-paar (0.19.3: „zu viele Verschachtelungen vermeiden, box in a box in a box“): Vergleich Nicht so / So ohne Kartenrahmen.
+   Je Seite nur eine farbige Linie oben, Kopf mit Symbol, Titel und Etikett, darunter das Bild im Rahmen von km-figure__media und der Text.
+   Markup: <div class="km-paar"><figure class="km-paar__seite km-paar__seite--nicht"><figcaption class="km-paar__kopf"><svg/>Nicht so<span class="km-pill km-pill--danger">…</span></figcaption><div class="km-figure__media">…</div><p class="km-paar__text">…</p></figure>…</div> */
+.km-paar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); gap: var(--km-space-l); }
+.km-paar__seite { --km-paar-farbe: var(--km-color-accent); margin: 0; min-width: 0; display: flex; flex-direction: column; gap: var(--km-space-s); padding-top: var(--km-space-m); border-top: var(--km-border-width-accent) solid var(--km-paar-farbe); }
+.km-paar__seite--nicht { --km-paar-farbe: var(--km-color-feedback-danger); }
+.km-paar__seite--so { --km-paar-farbe: var(--km-color-feedback-success); }
+.km-paar__kopf { display: flex; align-items: center; gap: var(--km-space-icon-text); font-weight: var(--km-font-weight-strong); color: var(--km-color-text); }
+.km-paar__kopf > svg { flex: none; width: var(--km-icon-m); height: var(--km-icon-m); color: var(--km-paar-farbe); }
+.km-paar__kopf > .km-pill { margin-left: auto; }
+.km-paar__text { margin: 0; max-width: var(--km-metric-measure-default); }
+
+/* Radius aus dem Theme (0.20.0, Theme „Nachtblau“: „Nachtblau aber weniger abgerundet“): Flächen, Felder und Knöpfe lesen --km-radius.
+   Kobalt und Papier setzen 0, dort bleibt alles eckig. Segmented Control rundet nur die äußeren Ecken, Kästchen halb so stark. */
+:is(.km-segmented, .km-iconbtn, .km-button, .km-pill, .km-chip, .km-callout, .km-searchbox, .km-check, .km-card, .km-card__tile, .km-table-wrap, .km-codeblock__box, .km-selectpanel, .km-colpicker__panel, .km-peek, .km-figure__media, .km-monogram) { border-radius: var(--km-radius); }
+.km-check { border-radius: calc(var(--km-radius) / 2); }
+.km-segmented > .km-segmented__btn:first-child { border-radius: var(--km-radius) 0 0 var(--km-radius); }
+.km-segmented > .km-segmented__btn:last-child { border-radius: 0 var(--km-radius) var(--km-radius) 0; }
+.km-segmented > .km-segmented__btn:only-child { border-radius: var(--km-radius); }
+
+/* Mobil-Untergrenze (Entscheidung 51, „Desktop zuerst, mobil benutzbar“; Prüfung tools/pruefe-mobil.cjs). Am Desktop ändert sich nichts. */
+/* Fokusrahmen nur bei Tastatur: KERN setzt ihn auf jedes fokussierte Element ([tabindex]:not([tabindex="-1"]):focus, 0,3,0), auch nach Tipp oder Klick; im Bildfenster der Demo-Startseite blieb davon ein blauer Streifen (2026-11-19) */
+:is(a[href], area[href], button, input, select, textarea, summary, iframe, [tabindex]):not([tabindex="-1"]):focus:not(:focus-visible) { outline: none; }
+@media (pointer: coarse) {  /* Tippziele mindestens 24 × 24 px (WCAG 2.5.8), nur mit Finger als Hauptzeiger */
+  .km-table__name { min-width: 1.5rem; min-height: 1.5rem; line-height: 1.5rem; }
+  .km-table__open, .km-clear, .km-searchbox__clear, .km-results__clear, .km-filterchips__x { width: 1.5rem; height: 1.5rem; }
+  .km-info, .km-infoi, .km-quicklinks__pill-remove, .km-sidebar__label-btn, .km-iconbtn.km-iconbtn--label { min-width: 1.5rem; min-height: max(1.5rem, var(--km-control-height, 0px)); }
+  .km-check, .km-task__check { width: 1.5rem; height: 1.5rem; }
+  :is(.km-task__meta, .km-card__foot) .km-link { display: inline-block; min-height: 1.5rem; line-height: 1.5rem; }  /* Links in Aufgaben- und Kartenfuß sind Ziele, kein Fließtext */
+}
+@media (hover: none) { .km-table tbody tr .km-dnd__grip { opacity: 0.55; } }
+:is(p, li, dd, blockquote, figcaption) > code { overflow-wrap: anywhere; }  /* langer Code im Fließtext bricht um, statt die Seite bei 320 px zu verbreitern (Reflow), auch in Rasterspalten; Tabellen nicht, die scrollen in ihrem Rahmen */
+@media (max-width: 40rem) { .km-segmented { max-width: 100%; overflow-x: auto; } .km-pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; } }  /* viele Segmente scrollen schmal in sich, statt die Seite zu verbreitern */  /* Griff zum Verschieben ohne Maus immer sichtbar statt nur bei Hover über der Zeile */

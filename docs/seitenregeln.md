@@ -27,12 +27,15 @@ Pflichtlektüre vor jeder neuen Seite und jeder Umstellung einer Seite auf Kernm
 - **Nur Lucide-Icons:** jedes Symbol ist ein Icon aus `assets/lucide.json` (Klasse `km-icon`), auch in Beispielen der Komponentenbeschreibung und in Texten, die Skripte setzen (`textContent = '✕ zurück'` war ein Fall); keine Schriftzeichen (⚙ ✕ × › ↗ ★ ✓ ▸ ▾ ☐ ⇄ ◎ ⚠) als Icon-Ersatz, die sitzen nie mittig und folgen nicht dem Theme. Prüfung: `tools/pruefe-seiten.py` und `dashboard-check.py` melden Knöpfe, Links, Etiketten und Köpfe, deren Text mit einem solchen Zeichen beginnt oder endet, und CSS-`content` mit solchen Zeichen.
 - **Flex-Zeilen mit Text und `<code>`** (Überschriften in Flächen, Einführungstext) brauchen `flex-wrap: wrap` bzw. `overflow-wrap: break-word`, sonst laufen lange Pfade bei 390 px aus der Fläche und die Seite scrollt waagerecht (Dashboard, 0.6.0).
 - **Symbol mittig zur ersten Zeile:** Icons, Zeilennummern, Pfeile stehen mittig zur ersten Textzeile, nicht zum Block und nicht an der Oberkante.
+- **Symbol vor dem Namen in Tabellen:** eine Größe für alle Seiten, `--km-component-table-icon-size` (16 px), mittig zur Namenszeile; ob im Namen (`km-table__name > svg`) oder davor (`km-table__typ`). Keine eigene Größe je Seite.
 - **Kachel neben Titel:** Titel mit Unterzeile (Name und Rolle, Titel und Untertitel oder Kennung) → Kachel mittig zum ganzen Block; Titel allein, auch umbrechend → Kachel mittig zur ersten Zeile. Das Kit regelt beides in `km-card__head` und `km-agent__header`; Köpfe mit Kachel immer aus diesen Klassen bauen.
 - **Icon und Text: ein Abstand (Entscheidung 41):** `--km-space-icon-text` (6 px) zwischen jedem Lucide-Icon und seinem Text, in Knöpfen, Seitenleiste, Zwischentiteln, Segmented Control, Chips, Panels und Etiketten; Kachel oder Kürzel zum Titel `--km-space-tile-title` (8 px). Keine eigenen Zahlen.
 - **Abstände zwischen Etikett und Text** fest per `gap` (`--km-space-xs`), nie per Leerzeichen (`km-table__label`, Score „A ab 90“).
 - **Farbkanten** (Gruppenzeile, Zeile in Arbeit, Karte) alle mit derselben Technik zeichnen: Innenschatten (`box-shadow: inset`), nie gemischt mit `border-left`, sonst stehen sie versetzt.
 
 - **Schriften immer einbetten (seit 0.8.0):** Seiten auf Kobalt betten mit `einbetten.py --schriften` ein, sonst fehlt Atkinson Hyperlegible Next und es greift die Ersatzschrift; danach `document.fonts` prüfen. Tabellenziffern setzt das Kit nur an Zahlen, Daten und Zählern (seit 0.7.0), die Seite setzt nichts selbst.
+
+- **Suchfeld in senkrechten Leisten einhüllen (2026-11-15, Knowledge-Base-Viewer):** `km-searchbox` hat `flex: 1` für Zeilen (Suche neben Knopf). Als direktes Kind einer senkrechten Flex-Leiste (`km-shell__nav`, `km-sidebar`) wächst es dann in die Höhe, sobald die Liste darunter kurz wird (Filter mit zwei Treffern: Suchfeld über halbe Bildschirmhöhe). Deshalb in eine Hülle setzen (wie `lk-suche` im Local AI Guide) oder im Kit für senkrechte Eltern `flex: none` ergänzen.
 
 ## Typografie (Entscheidungen 38 bis 40)
 
@@ -62,7 +65,7 @@ Pflichtlektüre vor jeder neuen Seite und jeder Umstellung einer Seite auf Kernm
 
 ## Filter und Zustand
 
-- **Vorgefertigte Filter schließen sich aus:** Kunde, Typ, Phase bzw. Schutz sind exklusiv; eine Wahl hebt die anderen auf (Kombinationen ergaben sonst oft 0 Treffer). Schutz hebt den Typ auf.
+- **Vorgefertigte Filter schließen sich aus:** Kunde, Typ, Phase bzw. Schutz sind exklusiv; eine Wahl hebt die anderen auf (Kombinationen ergaben sonst oft 0 Treffer). Schutz hebt den Typ auf. Ausnahme Umschalt+Klick: ergänzt den Filter, die anderen Filter bleiben stehen.
 - **Filterwahl schaltet die Spaltensortierung ab** und stellt die Gruppenreihenfolge wieder her.
 - **Filter öffnet, was er zeigt:** eingeklappte Gruppen mit Treffern werden geöffnet, der Sprung geht an den Anfang des Bereichs.
 - **Spalten folgen den sichtbaren Zeilen,** egal über welchen Filter: Spalten, die für keinen sichtbaren Zeilentyp gelten, blenden sich aus (Lagebild: nur Ordner sichtbar → PHP, php2shell, Spuren weg).
@@ -81,6 +84,14 @@ Pflichtlektüre vor jeder neuen Seite und jeder Umstellung einer Seite auf Kernm
 ## Tabellen
 
 - **Tabellen nur über `kmTabelle()` bauen:** Jede `km-table` läuft nach dem Aufbau durch `window.kmTabelle(table, { nummern, sortieren })`; die Funktion setzt Rollen, Kopf-Icons, Datum, Umfang und Aktionsspalte nach der Liste unten. Neue Spaltennamen kommen in die Zuordnung `SPALTEN` in `src/km-table.js`, nicht in die Seite. `dashboard-check.py` meldet Tabellen ohne Bauweg, Köpfe ohne Icon und Aktionen nicht zuletzt.
+- **Aufklappzeile zeigt nur Neues:** Eine aufgeklappte Zeile (`km-table__detail`) wiederholt nichts aus der Zeile darüber: kein Kartentitel, keine Funktionsknöpfe, keine Links, die in der Zeile stehen; Inhalt beginnt an der Kante der Zeilennummer, ohne eigenen Rahmen und Strich. Text in Lesebreite, ab 75rem Zeilenbreite Panels rechts neben Bild und Text, ab 110rem nebeneinander.
+- **Aufklappzeilen und Filter:** In Tabellen mit Aufklappzeilen sprechen Skripte und CSS nur direkte Zeilen an (`:scope > tbody > tr`, `#tabelle > tbody > tr`), und kein Filter darf die Detailzeile ausblenden; sonst verschwinden Inhalte in der aufgeklappten Karte (KB-Note `aufklappzeilen-in-tabellen-nur-direkte-zeilen-ansprechen`).
+- **Bereiche in Karten:** Aufklappbare Teile einer Karte (Dokumente, Aufgaben, Stand) sind `km-card__section`: Symbol, Titel, Zahl, Pfeil, Trennlinie über die ganze Breite. Kein nacktes `<details>` in Karten.
+- **Ein Symbol-Maß in Tabellen:** Symbole vor dem Namen (Typ, Art) nur über `--km-component-table-icon-size`; Pfeil zum Aufklappen als `km-table__chevron`, lokaler Link als `km-table__open`.
+- **Keine Box in der Box:** In einer Karte höchstens eine weitere Rahmenebene (Bild, Eingabefeld). Gruppen über `km-subhead` mit Symbol, Abstand oder eine Linie trennen; Vergleiche Nicht so / So mit `km-paar` statt zwei Karten. Globale Fassung: Skill `gestaltungsregeln`, Katalog 23.
+- **Hell/dunkel und Theme nur über `kmAnsicht`:** Seiten mit Umschaltern nutzen Knöpfe mit `data-km-modus` und `data-km-theme`, keine eigenen Skripte je Seite; weitere Themes per `einbetten.py --zusatz-theme`. Die Umschalter stehen oben in der Seitenleiste in `km-shell__controls` (Vorbild Local AI Guide): Theme als `km-segmented`, Hell/Dunkel als ein `km-iconbtn` mit `data-km-modus="wechsel"` und Symbol sun-moon; grundsätzlich nie im Seitenkopf oder in der Kopfzeile. Gilt für neue und umgebaute Seiten; Dashboard, Lagebild und KI-Design-Runde behalten ihre Umschalter vorerst, wo sie sind.
+- **Spalten verschiebbar:** Tabellen mit Spaltenauswahl bekommen `kmTabelle.spaltenZiehen` (Köpfe ziehen) und in der Spaltenauswahl je Spalte Hoch/Runter (`km-colpicker__move`, Weg ohne Maus); Name vorn und Aktionen hinten bleiben fest. Gespeichert wird nach Spaltennamen; `kmTabelle.spaltenOrdnen` läuft vor jedem Seitenskript, das Spaltennummern merkt. Merkt eine Seite Nummern (Auswahl, Sets, Adresse, Sortierung), rechnet sie diese nach einer Verschiebung um (Lagebild `lbSpalteVerschoben`). Verschieben lädt nicht neu: die Tabelle stellt sich im Hintergrund um, die Spaltenauswahl bleibt offen (`kmTabelle.spaltenMenue`: „im hintergrund der tabellenkopf sich ändern und die liste offen bleiben“).
+- **Keine leere Aktionsspalte:** Hat keine sichtbare Zeile Aktionen, etwa nach einem Filter, verschwindet die Spalte (`kmTabelle.leereAktionen`).
 - **Eine Standard-Tabelle überall:** `km-table` mit Spaltenrollen `km-table__key` (Kennung), `__nowrap` (Wert), `__text`/`__text--wide` (Fließtext), `__num` (Zahl). Namen in der ersten Spalte, auch Hostnamen und Pfade, tragen `km-table__name` (Textschrift, fett, Winkel in Unterzeilen); `__key` mit Mono nur für weitere Kennungen. Werte brechen nie um, Zeilen sind gleich hoch, Zusatzangaben stehen neben dem Wert, nicht darunter. Zellen beginnen oben.
 - **Rolle je Spalte (eine Liste für alle Seiten, 09.11.2026):** Gleiche Spalte, gleiche Rolle, egal ob die Klasse im HTML, in einem Generator oder per Script aus dem Spaltennamen (Lagebild `ROLLE`) gesetzt wird. Neue Spalten erst hier eintragen.
   - Name (Projekt, Host, Ordner, Agent): Zelle `__nowrap`, Name darin `km-table__name`, ggf. mit `km-table__tool`
@@ -108,6 +119,10 @@ Pflichtlektüre vor jeder neuen Seite und jeder Umstellung einer Seite auf Kernm
 - **Kompakt nur für Dokumentlisten** (`km-table--compact`), sonst Standard-Tabelle.
 - **Spaltenauswahl mit Sets** (`km-colpicker__set`): einige benannte Kombinationen und „Alle“; Name und Aktionen sind immer dabei; ein Set ist gedrückt, wenn die Auswahl ihm genau entspricht.
 - **Status als Etikett** (`km-pill`, `--ok/--warn/--danger/--neutral`); leer heißt „ohne Wert“, nicht „ok“.
+
+- **Grundlinie in Tabellenzeilen:** Werte einer Zeile stehen auf einer Grundlinie, auch Datum und Zahlen in kleinerer Mono-Schrift (`km-table` setzt `vertical-align: baseline`, Zellen mit Name, Symbol oder Knöpfen bleiben oben). Zitat: „schon wieder Zahl und Datum verschoben“. Die Namenszelle bekommt in Zeilen mit Knöpfen oder Pills so viel Abstand oben, dass ihre erste Zeile (1.25rem) mittig zur Knopfhöhe (1.6rem) steht.
+- **Kartenfuß unten:** `km-card__foot` steht unten in der Karte, in `km-cards` teilen Karten mit Kopf, Text und Fuß die Reihen, die Trennlinie liegt auf einer Höhe. Zitat: „in einer Zeile soll Trenner und alles drunter in der Karte unten sein, gilt für alle Karten“.
+- **Offene Tabellenzeile:** Zeile und Details mit durchgehendem, dezentem Rahmen, so stark wie die Zeilenlinie, für alle Zeilen gleich (auch Stern), außen ohne Unterbrechung durch Trennlinien. Zitat: „doch ein wenig zu krass mit der Outline, lieber dezent und einheitlich“.
 
 ## Karten
 
@@ -181,6 +196,13 @@ Pflichtlektüre vor jeder neuen Seite und jeder Umstellung einer Seite auf Kernm
 - **Schmal (390 px) prüfen:** keine waagerechte Scrollleiste der Seite. Raster mit `minmax(min(Xrem, 100%), 1fr)`, breite Tabellen und Grafiken in scrollenden Rahmen mit `position: relative`, lange Pfade und Titel dürfen unter 40rem umbrechen, zweispaltige Bausteine stapeln per Container-Abfrage.
 - **Grafiken haben eine Hochformat-Fassung (0.13.0):** Erklärgrafiken (Inline-SVG in `km-figure`) gibt es quer und hoch mit denselben Inhalten (`km-figure__wide` und `km-figure__tall` in derselben `km-figure__media`); das Kit zeigt die Hochformat-Fassung, sobald die Fläche schmaler als 56rem ist (Container-Abfrage, greift auch in schmalen Spalten). Die Hochformat-Fassung ist 250 Einheiten breit (`HOCH_B` in `tools/grafik_stil.py`, Umbruch mit `zeilen()`/`text_zeilen()`), höchstens `--km-component-figure-tall-max-width` breit dargestellt. Messen: kleinste Schrift in der sichtbaren Fassung bei 390 px mindestens 12 px gerendert (Schriftgröße × gerenderte Breite / viewBox-Breite), kein Text über seinen Kasten hinaus.
 - **Beispiele in Stories ohne harte Farben:** Platzhalterfarben über Theme-Tokens (Akzent, Signal, Werkzeugfarben), keine Kundenfarben.
+
+## Mobil (Entscheidung 51)
+
+- **Desktop zuerst, mobil benutzbar:** Seiten auf Kernmix werden für Desktop gestaltet; auf Telefon und Tablet gilt die Untergrenze aus Entscheidung 51: kein seitliches Scrollen bei 320 px, Tippziele 24 × 24 px oder mit Abstand, nichts nur per Hover, Fokusrahmen nur bei Tastatur. Eigene mobile Gestaltung darüber hinaus macht die Seite.
+- **Prüfen:** `node tools/pruefe-mobil.cjs [seite.html …]` muss „FUNDE: 0“ melden; ohne Angabe läuft es über die Kernmix-Seiten und die Seiten, die Kernmix nutzen. Funde ohne `km-`-Klasse behebt die Seite, Funde an Bausteinen das Kit.
+- **Größere Tippziele nur bei grobem Zeiger** (`@media (pointer: coarse)`), damit Werkzeuge am Desktop dicht bleiben; Einblenden bei Hover braucht ein Gegenstück bei `:focus` oder `@media (hover: none)`.
+- **Eigene fokussierbare Elemente** (`tabindex`) bekommen den Fokusrahmen über `:focus-visible`, nie über `:focus`; sonst bleibt nach einem Tipp ein Rahmen stehen.
 
 ## Breite und Ausrichtung
 

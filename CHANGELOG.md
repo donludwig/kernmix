@@ -2,6 +2,85 @@
 
 Format: neueste Version oben, je Eintrag eine Zeile. Jede Version hat einen Release-Namen nach ihrem Kern („…“ in der Überschrift). Basis: KERN-Kit (@kern-ux/native) 2.8.2.
 
+## 0.21.0 „Hosentasche“ · 2026-11-19
+
+Kernmix ist für den Desktop gestaltet und bleibt auf Telefon und Tablet benutzbar.
+
+- Untergrenze für Geräte ohne Maus nach WCAG 2.2: kein seitliches Scrollen bei 320 px, Tippziele mindestens 24 × 24 px, nichts nur per Hover, Fokusrahmen nur bei Tastatur. Am Desktop ändert sich nichts.
+- Fokusrahmen erscheint nur noch bei Tastaturbedienung (`:focus-visible`), nicht mehr nach Tipp oder Klick auf Elemente mit `tabindex`.
+- Bei grobem Zeiger (`pointer: coarse`) mindestens 24 × 24 px: Name und Öffnen-Knopf in Tabellen, Leeren-Knöpfe in Suchfeld und Filter-Chips, Info-Knopf, Entfernen in Schnellzugriffen, Gruppenköpfe der Seitenleiste, Knöpfe mit Text, Kästchen, Links in `km-task__meta` und `km-card__foot`.
+- Griff zum Verschieben von Tabellenzeilen ohne Maus immer sichtbar (`hover: none`).
+- Schmale Bildschirme: langer Code im Fließtext bricht um, Segmented Control scrollt in sich, Pills brechen um.
+
+## 0.20.1 „Knapp“ · 2026-11-18
+
+Tabellenspalten nur so breit wie ihr Inhalt.
+
+- Tabelle: Variante `km-table--knapp`, den freien Platz nimmt die letzte sichtbare Spalte vor den Aktionen (`kmTabelle.restSpalte(t)`); der Abstand zwischen den Spalten wächst mit der Bildschirmbreite (`--km-component-table-knapp-luft`).
+- `kmTabelle.breitenFest(t)` mit `km-table--messen`: Spaltenbreiten aus allen Zeilen, auch gefilterten; die Spalten springen nicht, wenn ein Filter andere Zeilen zeigt.
+- Tabelle: `km-table--laedt` hält eine Tabelle unsichtbar mit reserviertem Platz, bis die Seite sie gebaut hat; `km-table__tool--spalte` zeigt das Werkzeug als eigene Spalte.
+- `einbetten.py --schriften` lädt die Hauptschrift per `<link rel="preload">` vorab; `einbetten.py --schlank` übernimmt aus dem KERN-Kit nur Regeln mit genutzten `kern-*`-Klassen.
+
+## 0.20.0 „Nachtblau“ · 2026-11-16
+
+Neues Theme in Dunkelblau, dunkel und hell.
+
+- Theme „Nachtblau“ (`src/themes/nachtblau.css`): tiefes Dunkelblau, Akzent Himmelblau, Radius 4 px, runde Icon-Enden; Kontrast auf allen Flächen gerechnet (Text ≥ 11,1, Lesetext ≥ 7,7, Meta ≥ 5,1, Akzent ≥ 7,3).
+- Radius aus dem Theme (`--km-radius`) für Segmented Control, Knöpfe, Etiketten, Chips, Hinweiskasten, Suchfeld, Kästchen, Karten, Kacheln, Tabellenrahmen, Codeblock, Panels und Abbildungen. Kobalt und Papier setzen 0.
+
+## 0.19.3 „Wissen“ · 2026-11-16
+
+Aufklappbare Zeilen, Bereiche in Karten und Ansichtsschalter.
+
+- Tabelle: Pfeil `km-table__chevron`, Öffnen-Symbol `km-table__open`, Typ-Symbol `km-table__typ`; aufgeklappte Zeile mit durchgehendem Rahmen; Wertzellen auf gemeinsamer Grundlinie; Varianten `km-table--text-frei` und `km-table-wrap--schmal`.
+- `kmTabelle`: Spalten „Start“, „Ende“ und „Vor“ (wie lange her); Sortieren innerhalb von Gruppenzeilen.
+- Neue Bausteine: `km-card__section` (aufklappbarer Bereich in einer Karte), `kmAnsicht` (hell/dunkel und Theme umschalten, vor dem ersten Zeichnen angewendet), `km-paar` (Vergleich „Nicht so / So“).
+- Panel: Variante `km-panel--schritte`; Karte: `km-card__foot` steht unten, in `km-cards` auf gleicher Höhe (Subgrid).
+
+## 0.19.2 „Wissen“ · 2026-11-15
+
+- Tabelle: `km-table__detail` für aufgeklappte Zeilen, `km-table__row--offen`, `km-table__row--aufklappbar`.
+
+## 0.19.1 „Wissen“ · 2026-11-15
+
+- `km-finder`: fast bildschirmfüllend, Liste und Vorschau nebeneinander, Fundstellen mit Abschnittsname.
+
+## 0.19.0 „Wissen“ · 2026-11-15
+
+- Neuer Baustein `km-finder`: Suche als Fenster über der Seite (`<dialog>`) mit Filter-Chips, Trefferliste in Gruppen, Vorschau und Tastenhinweisen.
+
+## 0.18.4 „Wissen“ · 2026-11-15
+
+- Grafik `km-graph`: gestrichelte Linien in eigener Farbe `--km-component-graph-frage`; hervorgehobene Linien mit Rand und vorn.
+
+## 0.18.3 „Wissen“ · 2026-11-15
+
+- Eckleiste bei eingeklappter Seitenleiste mittig unter dem Einklapp-Knopf (`--km-corner-rail-left`).
+
+## 0.18.2 „Wissen“ · 2026-11-15
+
+- Seitenkopf: Icon-Knöpfe ohne Text in `km-header__actions` quadratisch.
+
+## 0.18.1 „Wissen“ · 2026-11-15
+
+- Dokumentkopf: Abstand für `km-metaline` direkt unter `km-lead` in `km-hero`.
+
+## 0.18.0 „Wissen“ · 2026-11-15
+
+Bausteine für Seitenkopf, Werkzeugzeile und Inhalt.
+
+- Seitenkopf: `km-shell__titles` und `km-shell__claim` für Name mit Unterzeile.
+- Seitenleiste: `km-shell__tools` für Suche plus quadratische Knöpfe in einer Zeile.
+- Seitengerüst: `km-shell__content` für den Innenabstand des Inhalts.
+- Dokumentkopf: Abstand für `km-toolbar` in `km-hero`.
+
+## 0.17.0 „Umgestellt“ · 2026-11-11
+
+Spalten lassen sich verschieben.
+
+- Tabellen (`km-table.js`): `kmTabelle.spaltenZiehen(tabelle, { schluessel })` macht die Spaltenköpfe ziehbar, `kmTabelle.spalteSchieben(…)` verschiebt ohne Maus (Hoch/Runter in der Spaltenauswahl), `kmTabelle.spaltenOrdnen(tabelle, schluessel)` stellt die gespeicherte Reihenfolge beim Laden her. Gespeichert wird nach Spaltennamen; Name vorn und Aktionen hinten bleiben fest. CSS: Greifzeiger, abgeblendeter Kopf beim Ziehen, Einfügelinie mit `--km-drop-line`, Knöpfe `km-colpicker__move`. Verschieben stellt sofort um, ohne Neuladen; die Spaltenauswahl bleibt dabei offen (`kmTabelle.spaltenMenue(tabelle, { schluessel, panel, nachher })`, Labels ziehen mit, Fokus bleibt auf dem Pfeil), die Tabelle meldet `km-spalten-verschoben` (`detail.perm`), Kopien von Zeilen stellt `kmTabelle.spaltenUmstellen(zeilen, perm)` um.
+- Tabellen: `kmTabelle.leereAktionen(tabelle)` blendet die Aktionsspalte aus, solange keine sichtbare Zeile Aktionen hat, etwa nach einem Filter (Klasse `km-table--ohne-aktionen`).
+
 ## 0.16.11 „Eine Linie“ · 2026-11-10
 
 Nummer, Symbol und Name stehen auf einer Linie.

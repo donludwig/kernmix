@@ -49,5 +49,8 @@ if _fehlt: raise SystemExit('km-table.js: Icons fehlen in lucide.json: ' + ', '.
 _js = _js.replace('/*IKONEN*/{}', json.dumps({n: _luc[n]['i'] for n in _namen}, ensure_ascii=False, separators=(',', ':')))
 schreiben(ROOT / 'dist/km-table.js', f'/*! Kernmix {VERSION} · kmTabelle · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-table.js, nicht von Hand ändern */\n' + _js)
 
+# Hell/dunkel und Theme umschalten (kmAnsicht): src/km-ansicht.js nach dist/km-ansicht.js
+schreiben(ROOT / 'dist/km-ansicht.js', f'/*! Kernmix {VERSION} · kmAnsicht · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-ansicht.js, nicht von Hand ändern */\n' + (ROOT / 'src/km-ansicht.js').read_text(encoding='utf-8'))
+
 # Aufklappbares schließen (kmPopup): src/km-popup.js nach dist/km-popup.js
 schreiben(ROOT / 'dist/km-popup.js', f'/*! Kernmix {VERSION} · kmPopup · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-popup.js, nicht von Hand ändern */\n' + (ROOT / 'src/km-popup.js').read_text(encoding='utf-8'))

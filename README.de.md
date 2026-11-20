@@ -26,7 +26,7 @@ Kernmix trägt das [Project Dashboard](https://github.com/donludwig/project-dash
 ### Bausteine
 
 - 🧩 **Über 30 Bausteine** in `src/km-components.css`: Seitenleiste mit Icon-Leiste, Bereich, Karte, Tabelle, Filter-Leiste, Segmented Control, Kapitelleiste, Dialog, Suche, Spaltenauswahl, Aufgaben und weitere. Bausteine lesen nur `--km-*`.
-- 📊 **Standard-Tabelle** `km-table.js`: eine Rolle je Spalte, ein Icon in jeder Kopfzelle, Datum mit relativer Angabe und Aktivitätsbalken, Sortierung, laufende Nummer und die Aktionsspalte zuletzt.
+- 📊 **Standard-Tabelle** `km-table.js`: eine Rolle je Spalte, ein Icon in jeder Kopfzelle, Datum mit relativer Angabe und Aktivitätsbalken, Sortierung, laufende Nummer, verschiebbare Spalten (Kopf ziehen oder Hoch/Runter in der Spaltenauswahl, Reihenfolge nach Spaltennamen gespeichert, die Tabelle stellt sich sofort um, die Spaltenauswahl bleibt offen) und die Aktionsspalte zuletzt, ausgeblendet, wenn keine sichtbare Zeile Aktionen hat.
 - 🪟 **Panels** `km-popup.js`: Jedes Dropdown, Menü und Panel schließt mit Esc und mit Klick daneben, danach liegt der Fokus wieder auf dem Knopf.
 - 📝 **Bausteine für Fragebögen**: Antwort-Knöpfe `km-answer`, Prüfkarte `km-criterion`, Feld, Score, Fortschritt und Begriff.
 - 🧭 **Seitengerüst** `km-shell` mit einer Seitenleiste, die zur Icon-Leiste einklappt, und einer Kapitelleiste, die die aktuelle Stelle markiert.

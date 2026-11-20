@@ -26,7 +26,7 @@ Kernmix carries the [Project Dashboard](https://github.com/donludwig/project-das
 ### Building blocks
 
 - 🧩 **More than 30 building blocks** in `src/km-components.css`: sidebar with icon rail, section, card, table, filter bar, segmented control, chapter bar, dialog, search, column picker, tasks, and more. Building blocks read only `--km-*`.
-- 📊 **Standard table** `km-table.js`: one role per column, an icon in every header cell, dates with a relative label and activity bar, sorting, row numbers, and the action column last.
+- 📊 **Standard table** `km-table.js`: one role per column, an icon in every header cell, dates with a relative label and activity bar, sorting, row numbers, movable columns (drag a header or use up and down in the column picker, order saved by column name, the table updates in place while the picker stays open), and the action column last, hidden when no visible row has actions.
 - 🪟 **Panels** `km-popup.js`: every dropdown, menu, and panel closes with Esc and with a click outside, then focus returns to its button.
 - 📝 **Questionnaire blocks**: answer buttons `km-answer`, check card `km-criterion`, field, score, progress, and term.
 - 🧭 **Page shell** `km-shell` with a sidebar that collapses into an icon rail and a chapter bar that marks where you are.
