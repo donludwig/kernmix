@@ -1,4 +1,4 @@
-/*! Kernmix 0.21.1 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
+/*! Kernmix 0.21.0 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
     erzeugt mit tools/build.py aus src/ — nicht von Hand ändern. Reihenfolge: kern.min.css, km.css, Theme. */
 /* Kernmix · Core Token: eigene Farbreihen (Entscheidung 35)
    Gleiches Schema wie die KERN-Paletten (--kern-color-<reihe>-<stufe>, Stufen 025 bis 950, OKLCH): --km-color-<reihe>-<stufe>.
@@ -1812,6 +1812,12 @@ button.km-table__tool:hover, button.km-table__tool[aria-pressed="true"] { color:
 .km-table-wrap, .km-graph__wrap, .km-focus__scroll { position: relative; } /* Bezugspunkt für absolut gesetzte Elemente (z. B. kern-sr-only im Spaltenkopf), sonst ziehen sie die Seite breiter */
 .km-table-wrap { max-width: 100%; overflow-x: auto; }
 @media (max-width: 40rem) { .km-section__head > .km-section__title { flex: 1 1 auto; min-width: 0; white-space: normal; } } /* schmal: Bereichstitel brechen um statt über den Rand zu ragen */
+/* Symbol und Begleiter mittig zur ersten Titelzeile, auch wenn der Titel umbricht (Gestaltungsregel 1 am Bereich „Über dieses Projekt & Agents“): Reihe = höher aus Titelzeile und Symbol, jedes Kind mittig darin */
+.km-section__head { --km-section-zeile: calc(var(--km-typography-font-size-heading-medium) * var(--km-typography-line-height-heading)); --km-section-reihe: max(var(--km-section-zeile), 2rem); align-items: flex-start; }
+.km-section__head > .km-section__icon { margin-top: calc((var(--km-section-reihe) - 2rem) / 2); }
+.km-section__head > .km-section__title { margin-top: calc((var(--km-section-reihe) - var(--km-section-zeile)) / 2); }
+.km-section__head > .km-section__tools { min-height: var(--km-section-reihe); align-items: center; }
+.km-section__head > :not(.km-section__icon, .km-section__title, .km-section__grip, .km-section__tools) { margin-top: calc((var(--km-section-reihe) - 1lh) / 2); }
 @media (max-width: 40rem) { /* schmal: lange Pfade und Befehle umbrechen statt die Karte zu sprengen (Prüfbericht 2026-11-08) */
   .km-chip, .path-tag, .km-agent__cmd code { white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
   .km-agent__header, .km-agent__cmd { flex-wrap: wrap; }

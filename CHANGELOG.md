@@ -2,24 +2,20 @@
 
 Format: neueste Version oben, je Eintrag eine Zeile. Jede Version hat einen Release-Namen nach ihrem Kern („…“ in der Überschrift). Basis: KERN-Kit (@kern-ux/native) 2.8.2.
 
-## 0.21.1 „Handlich“ · 2026-11-20
+## 0.21.0 „Hosentasche“ · 2026-11-20
 
-Auf dem Telefon kompakter: weniger Rand, Kopf in einer Zeile, Tabellen ohne verdeckte Namen.
-
-- Unter 40rem sind die Abstands-Rollen eine bis zwei Stufen enger (`--km-space-page`, `-section-x`, `-section-y`, `-block`, `-card`, `-group`, `-heading`); `km-header` nutzt `--km-space-page`.
-- Seitenkopf `km-header` klebt auf dem Telefon nicht und zeigt seine Knöpfe kleiner in einer scrollbaren Zeile.
-- Tabellen: Die Aktionsspalte klebt auf dem Telefon nicht mehr rechts und verdeckt keine Namen; Pills in Tabellen brechen nicht um.
-- Komponentenbeschreibung: Kopf auf dem Telefon in einer Zeile, Reiter und Modus als Symbol, weniger Rand.
-
-## 0.21.0 „Hosentasche“ · 2026-11-19
-
-Kernmix ist für den Desktop gestaltet und bleibt auf Telefon und Tablet benutzbar.
+Kernmix ist für den Desktop gestaltet und bleibt auf Telefon und Tablet benutzbar, dort mit weniger Rand und einem Kopf in einer Zeile.
 
 - Untergrenze für Geräte ohne Maus nach WCAG 2.2: kein seitliches Scrollen bei 320 px, Tippziele mindestens 24 × 24 px, nichts nur per Hover, Fokusrahmen nur bei Tastatur. Am Desktop ändert sich nichts.
 - Fokusrahmen erscheint nur noch bei Tastaturbedienung (`:focus-visible`), nicht mehr nach Tipp oder Klick auf Elemente mit `tabindex`.
 - Bei grobem Zeiger (`pointer: coarse`) mindestens 24 × 24 px: Name und Öffnen-Knopf in Tabellen, Leeren-Knöpfe in Suchfeld und Filter-Chips, Info-Knopf, Entfernen in Schnellzugriffen, Gruppenköpfe der Seitenleiste, Knöpfe mit Text, Kästchen, Links in `km-task__meta` und `km-card__foot`.
 - Griff zum Verschieben von Tabellenzeilen ohne Maus immer sichtbar (`hover: none`).
-- Schmale Bildschirme: langer Code im Fließtext bricht um, Segmented Control scrollt in sich, Pills brechen um.
+- Schmale Bildschirme: langer Code im Fließtext bricht um, Segmented Control scrollt in sich, Pills außerhalb von Tabellen brechen um.
+- Unter 40rem sind die Abstands-Rollen eine bis zwei Stufen enger (`--km-space-page`, `-section-x`, `-section-y`, `-block`, `-card`, `-group`, `-heading`); `km-header` nutzt `--km-space-page`.
+- Seitenkopf `km-header` klebt auf dem Telefon nicht und zeigt seine Knöpfe kleiner in einer scrollbaren Zeile.
+- Tabellen: Die Aktionsspalte klebt auf dem Telefon nicht mehr rechts und verdeckt keine Namen.
+- Komponentenbeschreibung: Kopf auf dem Telefon in einer Zeile, Reiter und Modus als Symbol, weniger Rand.
+- Bereichskopf `km-section__head`: Symbol, Zahl und Werkzeuge stehen mittig zur ersten Titelzeile, auch wenn der Titel umbricht.
 
 ## 0.20.1 „Knapp“ · 2026-11-18
 
