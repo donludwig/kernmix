@@ -204,3 +204,15 @@
 :root[data-kern-theme=light], [data-kern-theme=light], .kern-light { --km-color-data-2: var(--km-color-coral-500); --km-color-data-3: var(--km-color-grass-550); --km-shadow-overlay: var(--km-shadow); }
 @media (prefers-color-scheme: light) { :root:not([data-kern-theme]) { --km-color-data-2: var(--km-color-coral-500); --km-color-data-3: var(--km-color-grass-550); --km-shadow-overlay: var(--km-shadow); } }
 
+/* Telefon (Entscheidung 51): das Abstands-Regelwerk eine bis zwei Stufen enger, damit Inhalt statt Rand den schmalen Bildschirm füllt; Reihenfolge außen > innen bleibt */
+@media (max-width: 40rem) {
+  :root, [data-kern-theme], .kern-dark, .kern-light {
+    --km-space-page: var(--km-space-s);
+    --km-space-section-x: var(--km-space-s);
+    --km-space-section-y: var(--km-space-s);
+    --km-space-block: var(--km-space-s);
+    --km-space-card: var(--km-space-s);
+    --km-space-group: var(--km-space-xs);
+    --km-space-heading: var(--km-space-xl);
+  }
+}

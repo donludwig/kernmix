@@ -2,6 +2,15 @@
 
 Format: neueste Version oben, je Eintrag eine Zeile. Jede Version hat einen Release-Namen nach ihrem Kern („…“ in der Überschrift). Basis: KERN-Kit (@kern-ux/native) 2.8.2.
 
+## 0.21.1 „Handlich“ · 2026-11-20
+
+Auf dem Telefon kompakter: weniger Rand, Kopf in einer Zeile, Tabellen ohne verdeckte Namen.
+
+- Unter 40rem sind die Abstands-Rollen eine bis zwei Stufen enger (`--km-space-page`, `-section-x`, `-section-y`, `-block`, `-card`, `-group`, `-heading`); `km-header` nutzt `--km-space-page`.
+- Seitenkopf `km-header` klebt auf dem Telefon nicht und zeigt seine Knöpfe kleiner in einer scrollbaren Zeile.
+- Tabellen: Die Aktionsspalte klebt auf dem Telefon nicht mehr rechts und verdeckt keine Namen; Pills in Tabellen brechen nicht um.
+- Komponentenbeschreibung: Kopf auf dem Telefon in einer Zeile, Reiter und Modus als Symbol, weniger Rand.
+
 ## 0.21.0 „Hosentasche“ · 2026-11-19
 
 Kernmix ist für den Desktop gestaltet und bleibt auf Telefon und Tablet benutzbar.

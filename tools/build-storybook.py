@@ -383,7 +383,7 @@ seite = f'''<!doctype html>
   /* Navigation: Kit-Baustein Seitenleiste mit Baum (km-sidebar__group--tree, 0.15.0), keine eigenen Regeln für Auswahl, Hover, Einzug oder Icons */
   @media (min-width: 861px) {{ .sb-haupt.sb-zu {{ grid-template-columns: auto minmax(0, 1fr); }} }} /* eingeklappt bekommt der Inhalt die Breite; schmal bleibt eine Spalte, die Leiste steht oben */
   @media (min-width: 861px) {{ .sb-nav.km-sidebar--rail {{ width: calc(var(--km-component-sidebar-rail-width) + var(--km-sidebar-inset)); padding-inline: var(--km-sidebar-inset) 0; }} }} /* eingeklappt so breit wie die Leiste im Prototyp */
-  @media (max-width: 860px) {{ .sb-nav.km-sidebar--rail {{ flex-direction: row; flex-wrap: wrap; }} }} /* schmal steht die Leiste oben: eingeklappt eine Zeile mit Knopf und Icons */
+  @media (max-width: 860px) {{ .sb-nav.km-sidebar--rail {{ flex-direction: row; flex-wrap: wrap; align-items: center; }} .sb-nav.km-sidebar--rail > *, .sb-nav.km-sidebar--rail > .km-sidebar__group {{ margin-block: 0; }} }} /* schmal steht die Leiste oben: eingeklappt eine Zeile mit Knopf und Icons */
   /* Doku je Story im Aufbau D: vier Kapitel mit Kapitelleiste (km-chapters), nichts aufklappbar; KERN-Bausteine verweisen auf die KERN-Doku */
   .sb-markup {{ max-height: 40vh; overflow: auto; }}
   /* Startseite (Story „Einführung“, 0.9.0): ganze Seite aus tools/einfuehrung.py, ohne Bühne und Markup */
@@ -422,6 +422,17 @@ seite = f'''<!doctype html>
   .sb-inhalt {{ overflow-y: auto; }} .sb-buehne {{ min-height: 16rem; }} .sb-buehne iframe {{ min-height: 16rem; }} /* Bühne so hoch wie die Story (höchstens 75 % des Fensters), darunter folgt die Doku */ /* langer Kopf mit offener Doku: der Inhalt scrollt, die Bühne bleibt mindestens 24rem hoch (2026-11-09) */
   @media (max-width: 860px) {{ .sb-kopf {{ grid-template-columns: minmax(0, 1fr); }} .sb-tabs, .sb-steuer {{ justify-self: start; flex-wrap: wrap; }} .sb-steuer {{ grid-column: auto; }} }} /* schmal: Logo, Reiter, Steuerung untereinander, nichts ragt über 390 px hinaus */
   @media (max-width: 860px) {{ .sb-haupt {{ grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }} .sb-nav {{ max-height: 30vh; border-right: 0; border-bottom: var(--km-border-width) solid var(--km-color-border-card); }} .sb-inhalt {{ padding: var(--km-space-m); }} .sb-tabs {{ margin-left: 0; }} .sb-steuer {{ margin-left: 0; }} .sb-steuer label {{ flex-wrap: wrap; }} }}
+  @media (max-width: 40rem) {{  /* Telefon: Kopf in einer Zeile, Reiter und Modus nur als Symbol (Name bleibt für Screenreader), weniger Rand (Entscheidung 51) */
+    .sb-kopf {{ display: flex; flex-wrap: nowrap; gap: var(--km-space-xs); padding: var(--km-space-xs) var(--km-space-s); }}
+    .sb-marke > div {{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }}
+    .sb-marke .km-monogram {{ width: 1.75rem; height: 1.75rem; }}
+    .sb-tabs .km-segmented__btn, .sb-steuer .km-segmented__btn {{ font-size: 0; gap: 0; justify-content: center; min-width: 1.75rem; height: 1.75rem; padding-inline: var(--km-space-2xs); }}
+    .sb-steuer {{ flex-wrap: nowrap; gap: var(--km-space-xs); margin-left: auto; }}
+    .sb-steuer .sb-select select {{ height: 1.75rem; }}
+    .sb-inhalt {{ padding: var(--km-space-s); }}
+    .sb-nav {{ padding: var(--km-space-xs) var(--km-space-s); }}
+    .sb-inhalt .km-hero--start .km-hero__title {{ font-size: var(--km-typography-font-size-display); }}  /* eine Stufe kleiner */
+  }}
 </style>
 </head>
 <body>

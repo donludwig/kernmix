@@ -1,4 +1,4 @@
-/*! Kernmix 0.21.0 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
+/*! Kernmix 0.21.1 · Rollen und Bausteine · baut auf KERN-Kit (@kern-ux/native) 2.8.2 · EUPL-1.2
     erzeugt mit tools/build.py aus src/ — nicht von Hand ändern. Reihenfolge: kern.min.css, km.css, Theme. */
 /* Kernmix · Core Token: eigene Farbreihen (Entscheidung 35)
    Gleiches Schema wie die KERN-Paletten (--kern-color-<reihe>-<stufe>, Stufen 025 bis 950, OKLCH): --km-color-<reihe>-<stufe>.
@@ -298,6 +298,18 @@
 :root[data-kern-theme=light], [data-kern-theme=light], .kern-light { --km-color-data-2: var(--km-color-coral-500); --km-color-data-3: var(--km-color-grass-550); --km-shadow-overlay: var(--km-shadow); }
 @media (prefers-color-scheme: light) { :root:not([data-kern-theme]) { --km-color-data-2: var(--km-color-coral-500); --km-color-data-3: var(--km-color-grass-550); --km-shadow-overlay: var(--km-shadow); } }
 
+/* Telefon (Entscheidung 51): das Abstands-Regelwerk eine bis zwei Stufen enger, damit Inhalt statt Rand den schmalen Bildschirm füllt; Reihenfolge außen > innen bleibt */
+@media (max-width: 40rem) {
+  :root, [data-kern-theme], .kern-dark, .kern-light {
+    --km-space-page: var(--km-space-s);
+    --km-space-section-x: var(--km-space-s);
+    --km-space-section-y: var(--km-space-s);
+    --km-space-block: var(--km-space-s);
+    --km-space-card: var(--km-space-s);
+    --km-space-group: var(--km-space-xs);
+    --km-space-heading: var(--km-space-xl);
+  }
+}
 
 /* Kernmix: Bausteine (Präfix km-, Benennung nach BEM wie KERN)
    Jeder Baustein liest nur --km-*-Tokens. Eckig, Kontraste geprüft (Text ≥ 4,5, Bedienelemente ≥ 3). */
@@ -1810,7 +1822,7 @@ button.km-table__tool:hover, button.km-table__tool[aria-pressed="true"] { color:
 /* ── Kopfzeile der Seite (km-header, 09.11.2026): ein Baustein für Dashboard und Lagebild ──
    <header class="km-header"> <h1 class="km-header__title">[<a>]<img class="km-header__icon">Titel[</a>]</h1> [<nav>…</nav>] <div class="km-header__actions">Knöpfe</div> </header>
    Klick auf den Titel: Seite setzt zurück bzw. springt nach oben (Verhalten liefert die Seite). Randlos bis an die Fensterkante und Abstand nach unten regelt die Seite (hängt vom Body-Innenabstand ab). */
-.km-header { display: flex; align-items: center; gap: var(--km-space-m); position: sticky; top: 0; z-index: 50; box-sizing: border-box; padding: var(--km-space-s) var(--km-space-2xl); background: var(--km-color-card); border-bottom: var(--km-border-width) solid var(--km-color-border-card); box-shadow: 0 var(--km-space-3xs) var(--km-space-2xs) var(--km-shadow); }
+.km-header { display: flex; align-items: center; gap: var(--km-space-m); position: sticky; top: 0; z-index: 50; box-sizing: border-box; padding: var(--km-space-s) var(--km-space-page); background: var(--km-color-card); border-bottom: var(--km-border-width) solid var(--km-color-border-card); box-shadow: 0 var(--km-space-3xs) var(--km-space-2xs) var(--km-shadow); }
 .km-header__title { display: flex; align-items: center; gap: var(--km-space-xs); flex: none; margin: 0; font-size: var(--km-font-size-m); font-weight: var(--km-font-weight-strong); letter-spacing: -0.02em; white-space: nowrap; cursor: pointer; transition: color 0.15s; }
 .km-header__title > a { display: inline-flex; align-items: center; gap: var(--km-space-xs); color: inherit; text-decoration: none; }
 .km-header__title:hover, .km-header__title > a:hover { color: var(--km-color-accent); }
@@ -2701,5 +2713,12 @@ a.km-button { text-decoration: none; }
   :is(.km-task__meta, .km-card__foot) .km-link { display: inline-block; min-height: 1.5rem; line-height: 1.5rem; }  /* Links in Aufgaben- und Kartenfuß sind Ziele, kein Fließtext */
 }
 @media (hover: none) { .km-table tbody tr .km-dnd__grip { opacity: 0.55; } }
+@media (max-width: 40rem) {
+  .km-table :is(td, th).km-table__actions:last-child { position: static; }  /* Aktionen kleben schmal nicht rechts, sonst verdecken sie Namen und Werte; die Tabelle scrollt in ihrem Rahmen */
+  .km-header { position: static; gap: var(--km-space-xs); }  /* Kopf scrollt mit, statt ein Drittel des Bildschirms zu belegen */
+  .km-header__actions { flex-wrap: nowrap; overflow-x: auto; }  /* Knöpfe im Kopf in einer Zeile, kleiner; reicht der Platz nicht, scrollt die Zeile */
+  .km-header__actions > *, .km-header__actions > * > * { flex: none; flex-wrap: nowrap; }
+  .km-header .km-header__actions .km-iconbtn.km-iconbtn--label { font-size: var(--km-font-size-xs); padding-inline: var(--km-space-xs); }
+}
 :is(p, li, dd, blockquote, figcaption) > code { overflow-wrap: anywhere; }  /* langer Code im Fließtext bricht um, statt die Seite bei 320 px zu verbreitern (Reflow), auch in Rasterspalten; Tabellen nicht, die scrollen in ihrem Rahmen */
-@media (max-width: 40rem) { .km-segmented { max-width: 100%; overflow-x: auto; } .km-pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; } }  /* viele Segmente scrollen schmal in sich, statt die Seite zu verbreitern */  /* Griff zum Verschieben ohne Maus immer sichtbar statt nur bei Hover über der Zeile */
+@media (max-width: 40rem) { .km-segmented { max-width: 100%; overflow-x: auto; } .km-pill:not(.km-table *) { max-width: 100%; white-space: normal; overflow-wrap: anywhere; } }  /* viele Segmente scrollen schmal in sich, statt die Seite zu verbreitern */  /* Griff zum Verschieben ohne Maus immer sichtbar statt nur bei Hover über der Zeile */

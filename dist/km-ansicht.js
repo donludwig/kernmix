@@ -1,4 +1,4 @@
-/*! Kernmix 0.21.0 · kmAnsicht · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-ansicht.js, nicht von Hand ändern */
+/*! Kernmix 0.21.1 · kmAnsicht · EUPL-1.2 · erzeugt mit tools/build.py aus src/km-ansicht.js, nicht von Hand ändern */
 /* kmAnsicht (0.19.3: „Switch hell/dunkel und Theme-Switch“, als Baustein statt je Seite): Knöpfe mit data-km-modus="light|dark"
    setzen data-kern-theme, Knöpfe mit data-km-theme="<name>" schalten zwischen den eingebetteten Themes (style[data-kern-theme-name], einbetten.py --zusatz-theme).
    Die Wahl gilt je Seite (localStorage km-ansicht:<Pfad>) und wird vor dem ersten Zeichnen angewendet; ?modus=light|dark in der Adresse geht vor und wird nicht gemerkt.
